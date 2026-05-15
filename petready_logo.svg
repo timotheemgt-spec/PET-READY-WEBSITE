@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" role="img" aria-label="PetReady logo">
+  <title>PetReady</title>
+  <defs>
+    <style>
+      .pr-wordmark-pet { font-family: 'Inter', 'Söhne', system-ui, -apple-system, 'Segoe UI', sans-serif; font-weight: 800; font-size: 72px; letter-spacing: -2.5px; fill: #0E2A47; }
+      .pr-wordmark-ready { font-family: 'Inter', 'Söhne', system-ui, -apple-system, 'Segoe UI', sans-serif; font-weight: 800; font-size: 72px; letter-spacing: -2.5px; fill: #FF6B5B; }
+      .pr-tagline { font-family: 'Inter', 'Söhne', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: 14px; letter-spacing: 1.5px; fill: #0E2A47; opacity: 0.65; text-transform: uppercase; }
+    </style>
+  </defs>
+
+  <!-- Mark: rounded badge with paw and checkmark accent -->
+  <g transform="translate(10, 10)">
+    <!-- Badge -->
+    <rect x="0" y="0" width="120" height="120" rx="28" ry="28" fill="#0E2A47"/>
+
+    <!-- Paw print (white) -->
+    <g fill="#F5EFE6">
+      <!-- Main pad -->
+      <ellipse cx="60" cy="78" rx="22" ry="18"/>
+      <!-- Top toe -->
+      <ellipse cx="60" cy="36" rx="9" ry="12"/>
+      <!-- Left toe -->
+      <ellipse cx="34" cy="46" rx="8.5" ry="11" transform="rotate(-25 34 46)"/>
+      <!-- Right toe -->
+      <ellipse cx="86" cy="46" rx="8.5" ry="11" transform="rotate(25 86 46)"/>
+      <!-- Far left toe -->
+      <ellipse cx="22" cy="68" rx="7.5" ry="9.5" transform="rotate(-50 22 68)"/>
+      <!-- Far right toe -->
+      <ellipse cx="98" cy="68" rx="7.5" ry="9.5" transform="rotate(50 98 68)"/>
+    </g>
+
+    <!-- Coral checkmark inside the main pad (the "ready" signal) -->
+    <path d="M48 78 L57 87 L74 70" fill="none" stroke="#FF6B5B" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(150, 90)">
+    <text class="pr-wordmark-pet" x="0" y="0">Pet</text>
+    <text class="pr-wordmark-ready" x="118" y="0">Ready</text>
+  </g>
+
+  <!-- Tagline -->
+  <text class="pr-tagline" x="151" y="118">Travel-ready · Stress-free</text>
+</svg>

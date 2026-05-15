@@ -1,0 +1,19 @@
+# PetReady - robots.txt
+# Tous les crawlers sont autorisés à indexer le site
+
+User-agent: *
+Allow: /
+Disallow: /success.html
+Disallow: /downloads/
+Disallow: /admin/
+
+# Bloquer les bots IA agressifs (optionnel - retirer si tu veux apparaître dans ChatGPT/Claude/etc.)
+# User-agent: GPTBot
+# Disallow: /
+# User-agent: ClaudeBot
+# Disallow: /
+# User-agent: CCBot
+# Disallow: /
+
+# Sitemap
+Sitemap: https://petready.com/sitemap.xml

@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulateur PetReady — Votre plan de voyage en 30 secondes</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7HFQR7V9WF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-7HFQR7V9WF");
+  </script>
+<meta name="description" content="Choisissez votre pays de départ, votre destination et votre animal. PetReady vous génère votre plan de voyage personnalisé : vaccins, délais, documents, démarches.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="petready_logo_mark.svg">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Simulateur PetReady — Votre plan voyage animal en 30 sec">
+<meta property="og:description" content="Évitez l'erreur de papier qui fait refuser votre animal à la frontière. Diagnostic gratuit personnalisé selon votre destination.">
+<meta property="og:image" content="https://petready.fr/og-image.png">
+<meta property="og:url" content="https://petready.fr/simulateur.html">
+
+<style>
+  :root {
+    --navy: #0E2A47;
+    --navy-soft: #1B3B5F;
+    --sand: #F5EFE6;
+    --sand-deep: #ECE3D2;
+    --coral: #FF6B5B;
+    --coral-deep: #E8554A;
+    --ink: #0E2A47;
+    --muted: #6B7A8F;
+    --line: #E2D9C8;
+    --green: #34A853;
+    --green-light: #DCEEDF;
+    --orange: #F39C12;
+    --orange-light: #FFF3E0;
+    --red: #D32F2F;
+    --red-light: #FFEBEE;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--sand);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .serif { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+  a { color: var(--coral-deep); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ============== NAV ============== */
+  nav {
+    background: rgba(245, 239, 230, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .nav-inner {
+    max-width: 1080px; margin: 0 auto;
+    padding: 0 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 19px; letter-spacing: -0.5px;
+    color: var(--ink);
+  }
+  .nav-logo svg { width: 32px; height: 32px; }
+  .nav-logo .pet { color: var(--navy); }
+  .nav-logo .ready { color: var(--coral); }
+  .nav-back {
+    color: var(--navy);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* ============== HERO ============== */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+    color: white;
+    padding: 60px 0 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,107,91,0.18) 0%, transparent 70%);
+  }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    color: var(--coral);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+  .hero h1 .accent { color: var(--coral); }
+  .hero-sub {
+    font-size: 18px;
+    color: #B8C5D6;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    font-size: 13px;
+    color: #B8C5D6;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-stat svg { width: 16px; height: 16px; color: var(--coral); }
+
+  /* ============== WIZARD ============== */
+  .wizard {
+    max-width: 760px;
+    margin: -50px auto 60px;
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 30px 80px -20px rgba(14, 42, 71, 0.25);
+    position: relative;
+    z-index: 2;
+  }
+  .step-indicator {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-bottom: 32px;
+  }
+  .step-dot {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--sand);
+    color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+    transition: all 0.3s;
+  }
+  .step-dot.active {
+    background: var(--coral); color: white;
+    transform: scale(1.1);
+  }
+  .step-dot.done { background: var(--green); color: white; }
+  .step-line { width: 32px; height: 2px; background: var(--sand); border-radius: 2px; }
+  .step-line.done { background: var(--green); }
+
+  .wizard-step { display: none; }
+  .wizard-step.active { display: block; animation: fadeIn 0.4s ease-out; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-header { text-align: center; margin-bottom: 32px; }
+  .step-eyebrow {
+    color: var(--coral);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .step-title {
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+    margin-bottom: 6px;
+  }
+  .step-sub { color: var(--muted); font-size: 15px; }
+
+  /* Choice grid */
+  .choices {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .choice {
+    padding: 18px 12px;
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    background: white;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    font-family: inherit;
+  }
+  .choice:hover {
+    border-color: var(--coral);
+    background: #FFFCFB;
+    transform: translateY(-2px);
+  }
+  .choice.selected {
+    border-color: var(--coral);
+    background: #FFF5F3;
+    color: var(--coral-deep);
+  }
+  .choice .flag { font-size: 28px; display: block; margin-bottom: 6px; }
+  .choice .label { font-size: 13px; }
+  .choice .icon-animal { font-size: 36px; display: block; margin-bottom: 8px; }
+
+  /* Search box */
+  .search-box {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    font-size: 15px;
+    margin-bottom: 16px;
+    font-family: inherit;
+  }
+  .search-box:focus { outline: none; border-color: var(--navy); }
+
+  /* Wizard nav */
+  .wizard-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 32px;
+    gap: 12px;
+  }
+  .btn {
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .btn-back {
+    background: transparent;
+    color: var(--muted);
+  }
+  .btn-back:hover { color: var(--ink); }
+  .btn-primary {
+    background: var(--coral);
+    color: white;
+  }
+  .btn-primary:hover { background: var(--coral-deep); transform: translateY(-1px); }
+  .btn-primary:disabled { background: var(--sand-deep); color: var(--muted); cursor: not-allowed; transform: none; }
+
+  /* ============== RESULT ============== */
+  .result-wrap { display: none; }
+  .result-wrap.show { display: block; animation: fadeIn 0.5s ease-out; }
+
+  .result-header {
+    text-align: center;
+    padding: 60px 0 40px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .result-header::before {
+    content: "";
+    position: absolute;
+    top: -150px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,107,91,0.25) 0%, transparent 70%);
+  }
+  .result-summary-chip {
+    display: inline-block;
+    background: rgba(255, 107, 91, 0.15);
+    border: 1px solid var(--coral);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .result-header h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .result-header p {
+    color: #B8C5D6;
+    max-width: 580px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .route {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,255,255,0.08);
+    padding: 14px 28px;
+    border-radius: 14px;
+    margin-top: 24px;
+    position: relative;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .route-item { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .route-item .flag { font-size: 24px; }
+  .route-arrow { color: var(--coral); font-weight: 700; font-size: 20px; }
+
+  /* Result body */
+  .result-body { background: var(--sand); padding: 48px 0 60px; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--coral);
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* Timeline */
+  .timeline-section { margin-bottom: 40px; }
+  .timeline-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 8px; }
+  .timeline-header h3 { font-size: 20px; letter-spacing: -0.3px; }
+  .timeline {
+    background: white;
+    border-radius: 16px;
+    padding: 8px 0;
+    overflow: hidden;
+  }
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--line);
+    align-items: flex-start;
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-item.locked {
+    opacity: 0.5;
+    filter: blur(2.5px);
+    pointer-events: none;
+    user-select: none;
+  }
+  .timeline-deadline {
+    flex-shrink: 0;
+    width: 70px;
+    background: var(--sand);
+    color: var(--navy);
+    padding: 8px 0;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .timeline-deadline.urgent { background: var(--red-light); color: var(--red); }
+  .timeline-deadline.warning { background: var(--orange-light); color: #B45F06; }
+  .timeline-deadline.info { background: var(--green-light); color: #1E7A38; }
+  .timeline-content { flex: 1; }
+  .timeline-content h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .timeline-content p { color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+  /* Paywall */
+  .paywall {
+    background: linear-gradient(180deg, transparent 0%, var(--sand) 30%);
+    padding: 20px 0 0;
+    margin-top: -60px;
+    position: relative;
+    z-index: 1;
+  }
+  .paywall-card {
+    background: white;
+    border: 2px solid var(--coral);
+    border-radius: 22px;
+    padding: 36px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 30px 60px -20px rgba(255, 107, 91, 0.3);
+  }
+  .paywall-eyebrow {
+    color: var(--coral);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .paywall h3 { font-size: 28px; line-height: 1.2; letter-spacing: -0.8px; margin-bottom: 12px; }
+  .paywall p { color: var(--muted); max-width: 560px; margin: 0 auto 28px; }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .plan {
+    background: var(--sand);
+    border: 2px solid transparent;
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: left;
+    transition: all 0.15s;
+  }
+  .plan.featured {
+    background: white;
+    border-color: var(--coral);
+    transform: scale(1.04);
+    box-shadow: 0 10px 30px rgba(255, 107, 91, 0.15);
+  }
+  .plan-tag {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .plan-name {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .plan-price {
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -1.5px;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .plan-price .currency { font-size: 18px; vertical-align: super; }
+  .plan-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    min-height: 32px;
+  }
+  .plan-btn {
+    display: block;
+    padding: 12px 18px;
+    background: var(--navy);
+    color: white;
+    text-align: center;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.15s;
+  }
+  .plan-btn:hover { background: var(--navy-soft); text-decoration: none; color: white; }
+  .plan.featured .plan-btn { background: var(--coral); }
+  .plan.featured .plan-btn:hover { background: var(--coral-deep); }
+
+  .guarantee-row {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    font-size: 13px;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .guarantee-row span { display: flex; align-items: center; gap: 6px; }
+  .guarantee-row svg { width: 16px; height: 16px; color: var(--green); }
+
+  /* Restart link */
+  .restart-link {
+    text-align: center;
+    margin-top: 24px;
+    padding: 16px;
+  }
+  .restart-link a {
+    color: var(--muted);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  footer {
+    background: var(--navy);
+    color: #8896AB;
+    padding: 28px 0;
+    font-size: 13px;
+    text-align: center;
+  }
+  footer a { color: white; }
+
+  [data-fr], [data-en] { display: none; }
+  html[data-lang="fr"] [data-fr] { display: inline; }
+  html[data-lang="en"] [data-en] { display: inline; }
+  html[data-lang="fr"] [data-fr-block] { display: block; }
+  html[data-lang="en"] [data-en-block] { display: block; }
+  [data-fr-block], [data-en-block] { display: none; }
+
+  @media (max-width: 700px) {
+    .wizard { padding: 28px 20px; margin-left: 16px; margin-right: 16px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .plans { grid-template-columns: 1fr; }
+    .plan.featured { transform: none; }
+    .choices { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="120" height="120" rx="28" fill="#0E2A47"/>
+        <g fill="#F5EFE6">
+          <ellipse cx="60" cy="78" rx="22" ry="18"/>
+          <ellipse cx="60" cy="36" rx="9" ry="12"/>
+          <ellipse cx="34" cy="46" rx="8.5" ry="11" transform="rotate(-25 34 46)"/>
+          <ellipse cx="86" cy="46" rx="8.5" ry="11" transform="rotate(25 86 46)"/>
+          <ellipse cx="22" cy="68" rx="7.5" ry="9.5" transform="rotate(-50 22 68)"/>
+          <ellipse cx="98" cy="68" rx="7.5" ry="9.5" transform="rotate(50 98 68)"/>
+        </g>
+        <path d="M48 78 L57 87 L74 70" fill="none" stroke="#FF6B5B" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span><span class="pet">Pet</span><span class="ready">Ready</span></span>
+    </a>
+    <a href="index.html" class="nav-back"><span data-fr>← Retour à l'accueil</span><span data-en>← Back to home</span></a>
+  </div>
+</nav>
+
+<!-- ============== HERO (wizard) ============== -->
+<section class="hero" id="hero-wizard">
+  <div class="container">
+    <div class="hero-eyebrow"><span data-fr>🐾 Diagnostic gratuit — 30 secondes</span><span data-en>🐾 Free diagnostic — 30 seconds</span></div>
+    <h1 class="serif"><span data-fr>Votre plan voyage animal,<br><span class="accent">personnalisé en un clic.</span></span><span data-en>Your pet travel plan,<br><span class="accent">personalized in one click.</span></span></h1>
+    <p class="hero-sub"><span data-fr>Dites-nous où vous allez. PetReady calcule pour vous les démarches, vaccins, délais et documents nécessaires.</span><span data-en>Tell us where you're going. PetReady calculates the steps, vaccines, timelines and documents you need.</span></p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>
+        <span data-fr>À jour règles 2026</span><span data-en>Updated 2026 rules</span>
+      </div>
+      <div class="hero-stat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>
+        <span data-fr>Validé vétérinaire</span><span data-en>Vet-approved</span>
+      </div>
+      <div class="hero-stat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>
+        <span data-fr>Gratuit, sans email</span><span data-en>Free, no email needed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WIZARD ============== -->
+<div class="wizard" id="wizard">
+
+  <div class="step-indicator">
+    <div class="step-dot active" id="dot1">1</div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-dot" id="dot2">2</div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-dot" id="dot3">3</div>
+  </div>
+
+  <!-- Step 1: Animal -->
+  <div class="wizard-step active" id="step1">
+    <div class="step-header">
+      <div class="step-eyebrow"><span data-fr>Étape 1 sur 3</span><span data-en>Step 1 of 3</span></div>
+      <h2 class="step-title serif"><span data-fr>Quel est votre animal ?</span><span data-en>What's your pet?</span></h2>
+      <p class="step-sub"><span data-fr>PetReady couvre chiens et chats pour cette V1.</span><span data-en>PetReady covers dogs and cats in this V1.</span></p>
+    </div>
+    <div class="choices">
+      <button class="choice" data-animal="dog">
+        <span class="icon-animal">🐶</span>
+        <span class="label"><span data-fr>Chien</span><span data-en>Dog</span></span>
+      </button>
+      <button class="choice" data-animal="cat">
+        <span class="icon-animal">🐱</span>
+        <span class="label"><span data-fr>Chat</span><span data-en>Cat</span></span>
+      </button>
+    </div>
+    <div class="wizard-nav">
+      <span></span>
+      <button class="btn btn-primary" id="btn-next-1" disabled><span data-fr>Continuer →</span><span data-en>Continue →</span></button>
+    </div>
+  </div>
+
+  <!-- Step 2: Departure -->
+  <div class="wizard-step" id="step2">
+    <div class="step-header">
+      <div class="step-eyebrow"><span data-fr>Étape 2 sur 3</span><span data-en>Step 2 of 3</span></div>
+      <h2 class="step-title serif"><span data-fr>D'où partez-vous ?</span><span data-en>Where are you departing from?</span></h2>
+      <p class="step-sub"><span data-fr>Sélectionnez votre pays de résidence.</span><span data-en>Select your country of residence.</span></p>
+    </div>
+    <input class="search-box" id="search-dep">
+    <div class="choices" id="choices-dep"></div>
+    <div class="wizard-nav">
+      <button class="btn btn-back" id="btn-back-2"><span data-fr>← Retour</span><span data-en>← Back</span></button>
+      <button class="btn btn-primary" id="btn-next-2" disabled><span data-fr>Continuer →</span><span data-en>Continue →</span></button>
+    </div>
+  </div>
+
+  <!-- Step 3: Destination -->
+  <div class="wizard-step" id="step3">
+    <div class="step-header">
+      <div class="step-eyebrow"><span data-fr>Étape 3 sur 3</span><span data-en>Step 3 of 3</span></div>
+      <h2 class="step-title serif"><span data-fr>Où allez-vous ?</span><span data-en>Where are you going?</span></h2>
+      <p class="step-sub"><span data-fr>Votre destination de voyage.</span><span data-en>Your travel destination.</span></p>
+    </div>
+    <input class="search-box" id="search-arr">
+    <div class="choices" id="choices-arr"></div>
+    <div class="wizard-nav">
+      <button class="btn btn-back" id="btn-back-3"><span data-fr>← Retour</span><span data-en>← Back</span></button>
+      <button class="btn btn-primary" id="btn-compute" disabled><span data-fr>🐾 Voir mon plan →</span><span data-en>🐾 See my plan →</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ============== RESULT ============== -->
+<div class="result-wrap" id="result-wrap">
+
+  <section class="result-header">
+    <div class="container">
+      <div class="result-summary-chip"><span data-fr>✓ Votre plan personnalisé est prêt</span><span data-en>✓ Your personalized plan is ready</span></div>
+      <h2 class="serif" id="result-title">Voici le plan pour Tomato</h2>
+      <p id="result-tagline">À jour des règles applicables en mai 2026, validé par un vétérinaire accrédité.</p>
+      <div class="route" id="route-display"></div>
+    </div>
+  </section>
+
+  <section class="result-body">
+    <div class="container">
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-steps">0</div>
+          <div class="stat-label"><span data-fr>Démarches</span><span data-en>Steps</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-time">0j</div>
+          <div class="stat-label"><span data-fr>Délai minimum</span><span data-en>Min. timeline</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-cost">0€</div>
+          <div class="stat-label"><span data-fr>Coût estimé</span><span data-en>Est. cost</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-difficulty">—</div>
+          <div class="stat-label"><span data-fr>Difficulté</span><span data-en>Difficulty</span></div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="timeline-section">
+        <div class="timeline-header">
+          <h3 class="serif"><span data-fr>Votre rétroplanning</span><span data-en>Your timeline</span></h3>
+          <span style="font-size:13px; color:var(--muted);"><span data-fr>Aperçu — les étapes complètes sont dans le pack</span><span data-en>Preview — full steps are inside the pack</span></span>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+
+      <!-- Paywall -->
+      <div class="paywall">
+        <div class="paywall-card">
+          <div class="paywall-eyebrow"><span data-fr>⭐ Pour voir tout en détail</span><span data-en>⭐ To see the full details</span></div>
+          <h3 class="serif"><span data-fr>Débloquez votre plan complet + l'assistant.</span><span data-en>Unlock your full plan + assistant.</span></h3>
+          <p><span data-fr>Vous voyez ici un aperçu. Le pack complet inclut : le PDF guide complet (60 pages), le compteur de jours interactif, les 10 modèles de courriers prêts à coller, et l'accès à votre dashboard personnel.</span><span data-en>This is just a preview. The full pack includes: the complete PDF guide (60 pages), the interactive day counter, 10 ready-to-send letter templates, and access to your personal dashboard.</span></p>
+
+          <div class="plans">
+
+            <div class="plan">
+              <div class="plan-name">Standard</div>
+              <div class="plan-price">49<span class="currency">€</span></div>
+              <div class="plan-desc"><span data-fr>"Couvrez le risque pour ce voyage."</span><span data-en>"Cover the risk for this trip."</span></div>
+              <a href="checkout.html?plan=standard" class="plan-btn"><span data-fr>Je veux dormir tranquille →</span><span data-en>I want peace of mind →</span></a>
+            </div>
+
+            <div class="plan featured">
+              <div class="plan-tag"><span data-fr>Recommandé</span><span data-en>Recommended</span></div>
+              <div class="plan-name">Multi-destinations</div>
+              <div class="plan-price">79<span class="currency">€</span></div>
+              <div class="plan-desc"><span data-fr>"Toutes destinations couvertes."</span><span data-en>"All destinations covered."</span></div>
+              <a href="checkout.html?plan=multi" class="plan-btn"><span data-fr>Couvrir tous mes voyages →</span><span data-en>Cover all my trips →</span></a>
+            </div>
+
+            <div class="plan">
+              <div class="plan-name">Premium</div>
+              <div class="plan-price">149<span class="currency">€</span></div>
+              <div class="plan-desc"><span data-fr>"Sérénité à vie + Telegram."</span><span data-en>"Lifetime peace of mind + Telegram."</span></div>
+              <a href="checkout.html?plan=premium" class="plan-btn"><span data-fr>Sécurité à vie →</span><span data-en>Lifetime security →</span></a>
+            </div>
+
+          </div>
+
+          <div class="guarantee-row">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>
+              <span data-fr>Téléchargement immédiat</span><span data-en>Instant download</span>
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>
+              <span data-fr>Garantie 14 jours</span><span data-en>14-day guarantee</span>
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>
+              <span data-fr>Validé véto</span><span data-en>Vet-approved</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restart-link">
+        <a onclick="restartWizard()"><span data-fr>← Refaire le diagnostic avec une autre destination</span><span data-en>← Run the diagnostic again with another destination</span></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div>© 2026 PetReady — <a href="index.html"><span data-fr>Retour à l'accueil</span><span data-en>Back to home</span></a> · <a href="mailto:hello@petready.fr">hello@petready.fr</a></div>
+</footer>
+
+<script>
+
+  // ============== LANG SYSTEM ==============
+  const TRANSLATIONS = {
+    fr: {
+      searchPlaceholder: 'Rechercher un pays...',
+      resultTitle: (animal) => `Voici votre plan pour ${animal === 'dog' ? 'votre chien' : 'votre chat'}.`,
+      resultTagline: 'À jour des règles applicables en mai 2026, validé par un vétérinaire accrédité.',
+      withAnimal: (emoji, animal) => `avec ${emoji} ${animal === 'dog' ? 'un chien' : 'un chat'}`,
+      difficulty: { easy: '🟢 Facile', medium: '🟠 Moyen', hard: '🔴 Complexe' },
+      req: {
+        chipTitle: 'Vérifier puce ISO et vaccin antirabique',
+        chipDesc: 'Puce ISO 11784/11785 obligatoire (15 chiffres). Vaccin antirabique en cours de validité avec délai 21 jours minimum avant le voyage.',
+        minAgeTitle: (age) => `Âge minimum : ${age}`,
+        minAgeEn: (animal) => `${animal === 'dog' ? 'Le chien' : 'Le chat'} doit avoir cet âge minimum à la date du voyage. Sinon, refus à la frontière sans appel.`,
+        minAgeFr: (animal) => `${animal === 'dog' ? '6 mois (règle USA août 2024)' : '15 semaines (12 sem. vaccin + 21j attente)'}`,
+        seroDep: 'Test sérologique antirabique (retour depuis pays non listé)',
+        seroDepDesc: '⚠️ Test à faire au minimum 3 MOIS avant le voyage retour. C'est l'erreur n°1 des familles qui partent en vacances au Maroc.',
+        seroArr: 'Test sérologique pour le retour (à anticiper)',
+        seroArrDesc: (dep, arr) => `Pour rentrer ${dep === 'France' ? "en France" : 'dans votre pays'} depuis ${arr}, vous devrez avoir fait un test sérologique au moins 3 mois avant le retour. À planifier MAINTENANT.`,
+        passportTitle: 'Passeport européen pour animal',
+        passportDesc: 'Délivré par tout vétérinaire habilité (30-50€). Si vous résidez dans l'UE et restez dans l'UE, c'est le seul document principal nécessaire.',
+        certTitle: (country) => `Certificat sanitaire pour ${country}`,
+        certDesc: (arr) => `À émettre dans les 10 jours avant le départ par un vétérinaire ${arr.usa ? 'USDA-accredited' : arr.ahcUK ? 'Official Vet UK' : 'accrédité'}. Coût : 100-200€.`,
+        usdaTitle: 'Endossement USDA (CRITIQUE)',
+        usdaDesc: 'Le certificat vétérinaire DOIT être endossé par l'USDA APHIS via VEHCS sous 10 jours. Sans endossement = refus à l'embarquement. Coût : ~38$.',
+        cdcTitle: 'CDC Dog Import Form (depuis août 2024)',
+        cdcDesc: 'Formulaire en ligne CDC à remplir 2-10 jours avant l'arrivée. Présentation obligatoire au comptoir d'enregistrement.',
+        ahcTitle: 'Animal Health Certificate (règle avril 2026)',
+        ahcDesc: 'Depuis le 22 avril 2026, chaque trajet UK ↔ UE exige un AHC neuf (valide 10 jours). Plus jamais de passeport européen UK. Coût : £150-200.',
+        vermTitle: 'Vermifuge échinocoque obligatoire',
+        vermDesc: (arr) => `${arr} exige un vermifuge contre l'échinocoque administré entre 24h et 120h (5 jours) avant l'entrée. Inscription au passeport par le véto.`,
+        breedTitle: (arr) => `Vérifier restrictions de race (${arr})`,
+        breedDesc: (arr, animal) => `${arr} interdit certaines races (Pit Bull, Staffordshire, Dogo Argentino, etc.). Vérifiez avant de réserver — sinon ${animal === 'dog' ? 'le chien' : "l'animal"} refusé à la frontière.`,
+        flightTitle: 'Réserver le vol + place animal',
+        flightDesc: 'Les compagnies aériennes limitent le nombre d'animaux par vol. Confirmer cabine/soute selon le poids. Achetez une cage IATA homologuée si soute.',
+        cageTitle: 'Habituer l'animal à sa cage',
+        cageDesc: 'Au moins 30 jours d'adaptation. Ouvrez-la à la maison, mettez des friandises dedans, fermez-la progressivement.',
+        boardingTitle: 'Embarquement',
+        boardingDesc: 'Arriver 3 heures avant un vol international. Documents à portée. Trousse voyage : eau, gamelle, jouet familier, sac à crottes.',
+      }
+    },
+    en: {
+      searchPlaceholder: 'Search a country...',
+      resultTitle: (animal) => `Here is your plan for your ${animal === 'dog' ? 'dog' : 'cat'}.`,
+      resultTagline: 'Based on rules applicable in May 2026, vet-approved.',
+      withAnimal: (emoji, animal) => `with ${emoji} a ${animal === 'dog' ? 'dog' : 'cat'}`,
+      difficulty: { easy: '🟢 Easy', medium: '🟠 Medium', hard: '🔴 Complex' },
+      req: {
+        chipTitle: 'Check ISO microchip & rabies vaccine',
+        chipDesc: 'ISO 11784/11785 microchip required (15 digits). Valid rabies vaccine with minimum 21-day wait before travel.',
+        minAgeTitle: (age) => `Minimum age: ${age}`,
+        minAgeEn: (animal) => `Your ${animal === 'dog' ? 'dog' : 'cat'} must meet this minimum age on the travel date. Otherwise, border refusal with no appeal.`,
+        minAgeFr: (animal) => `${animal === 'dog' ? '6 months (USA rule Aug 2024)' : '15 weeks (12 wks vaccine + 21d wait)'}`,
+        seroDep: 'Rabies serology test (return from non-listed country)',
+        seroDepDesc: '⚠️ Test must be done at least 3 MONTHS before the return trip. This is the #1 mistake families make when traveling to Morocco.',
+        seroArr: 'Serology test for return trip (plan ahead)',
+        seroArrDesc: (dep, arr) => `To re-enter ${dep} from ${arr}, you will need a serology test done at least 3 months before returning. Plan this NOW.`,
+        passportTitle: 'EU pet passport',
+        passportDesc: 'Issued by any authorized vet (€30-50). If you live in the EU and stay in the EU, this is the only main document required.',
+        certTitle: (country) => `Health certificate for ${country}`,
+        certDesc: (arr) => `To be issued within 10 days before departure by a ${arr.usa ? 'USDA-accredited' : arr.ahcUK ? 'Official UK Vet' : 'certified'} vet. Cost: €100-200.`,
+        usdaTitle: 'USDA Endorsement (CRITICAL)',
+        usdaDesc: 'The vet certificate MUST be endorsed by USDA APHIS via VEHCS within 10 days. No endorsement = denied boarding. Cost: ~$38.',
+        cdcTitle: 'CDC Dog Import Form (since Aug 2024)',
+        cdcDesc: 'CDC online form to complete 2-10 days before arrival. Must be presented at check-in counter.',
+        ahcTitle: 'Animal Health Certificate (April 2026 rule)',
+        ahcDesc: 'Since April 22, 2026, each UK ↔ EU trip requires a new AHC (valid 10 days). EU pet passports no longer valid in the UK. Cost: £150-200.',
+        vermTitle: 'Mandatory echinococcus deworming',
+        vermDesc: (arr) => `${arr} requires echinococcus deworming administered between 24h and 120h (5 days) before entry. Must be recorded in the passport by the vet.`,
+        breedTitle: (arr) => `Check breed restrictions (${arr})`,
+        breedDesc: (arr, animal) => `${arr} bans certain breeds (Pit Bull, Staffordshire, Dogo Argentino, etc.). Check before booking — otherwise your ${animal === 'dog' ? 'dog' : 'pet'} will be refused at the border.`,
+        flightTitle: 'Book your flight + pet spot',
+        flightDesc: 'Airlines limit the number of animals per flight. Confirm cabin/hold based on weight. Buy an IATA-approved crate if traveling in hold.',
+        cageTitle: 'Crate training',
+        cageDesc: 'At least 30 days of adaptation. Leave it open at home, place treats inside, gradually close it.',
+        boardingTitle: 'Boarding day',
+        boardingDesc: 'Arrive 3 hours before an international flight. Documents at hand. Travel kit: water, bowl, favorite toy, waste bags.',
+      }
+    }
+  };
+
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang);
+    // Update search placeholders
+    const ph = TRANSLATIONS[lang].searchPlaceholder;
+    const sdep = document.getElementById('search-dep');
+    const sarr = document.getElementById('search-arr');
+    if (sdep) sdep.placeholder = ph;
+    if (sarr) sarr.placeholder = ph;
+  }
+
+  // Init lang from localStorage (set by index.html)
+  (function() {
+    let lang = 'fr';
+    try { lang = localStorage.getItem('petready-lang') || 'fr'; } catch(e) {}
+    if (lang !== 'fr' && lang !== 'en') lang = 'fr';
+    setLang(lang);
+  })();
+
+  // ============== DATABASE OF COUNTRIES ==============
+  const COUNTRIES = {
+    france:      { label: 'France',         flag: '🇫🇷', ue: true },
+    espagne:     { label: 'Espagne',        flag: '🇪🇸', ue: true },
+    italie:      { label: 'Italie',         flag: '🇮🇹', ue: true },
+    portugal:    { label: 'Portugal',       flag: '🇵🇹', ue: true },
+    allemagne:   { label: 'Allemagne',      flag: '🇩🇪', ue: true, breedRestrictions: true },
+    belgique:    { label: 'Belgique',       flag: '🇧🇪', ue: true },
+    paysbas:     { label: 'Pays-Bas',       flag: '🇳🇱', ue: true },
+    irlande:     { label: 'Irlande',        flag: '🇮🇪', ue: true, vermifuge: true },
+    finlande:    { label: 'Finlande',       flag: '🇫🇮', ue: true, vermifuge: true },
+    norvege:     { label: 'Norvège',        flag: '🇳🇴', ue: true, vermifuge: true },
+    malte:       { label: 'Malte',          flag: '🇲🇹', ue: true, vermifuge: true },
+    suisse:      { label: 'Suisse',         flag: '🇨🇭', ue: false, ueLike: true },
+    royaumeuni:  { label: 'Royaume-Uni',    flag: '🇬🇧', ue: false, ahcUK: true, vermifuge: true, postBrexit: true },
+    usa:         { label: 'États-Unis',     flag: '🇺🇸', ue: false, usda: true, cdc: true, breedRestrictions: true },
+    canada:      { label: 'Canada',         flag: '🇨🇦', ue: false, cfia: true },
+    maroc:       { label: 'Maroc',          flag: '🇲🇦', ue: false, nonListed: true },
+  };
+
+  // ============== STATE ==============
+  const state = { animal: null, dep: null, arr: null };
+
+  // ============== UI POPULATION ==============
+  function populateCountryChoices(containerId, excludeCode = null) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    Object.entries(COUNTRIES).forEach(([code, c]) => {
+      if (code === excludeCode) return;
+      const btn = document.createElement('button');
+      btn.className = 'choice';
+      btn.dataset.country = code;
+      btn.innerHTML = `<span class="flag">${c.flag}</span><span class="label">${c.label}</span>`;
+      container.appendChild(btn);
+    });
+  }
+  populateCountryChoices('choices-dep');
+  populateCountryChoices('choices-arr');
+
+  // ============== STEP NAVIGATION ==============
+  function goToStep(n) {
+    document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + n).classList.add('active');
+    for (let i = 1; i <= 3; i++) {
+      const dot = document.getElementById('dot' + i);
+      dot.classList.remove('active', 'done');
+      if (i < n) dot.classList.add('done');
+      else if (i === n) dot.classList.add('active');
+    }
+    for (let i = 1; i <= 2; i++) {
+      const line = document.getElementById('line' + i);
+      line.classList.toggle('done', i < n);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ============== STEP 1: Animal ==============
+  document.querySelectorAll('[data-animal]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const clickedBtn = e.target.closest('[data-animal]');
+      if (!clickedBtn) return;
+      document.querySelectorAll('[data-animal]').forEach(b => b.classList.remove('selected'));
+      clickedBtn.classList.add('selected');
+      state.animal = clickedBtn.dataset.animal;
+      document.getElementById('btn-next-1').disabled = false;
+    });
+  });
+  document.getElementById('btn-next-1').addEventListener('click', () => {
+    if (state.animal) goToStep(2);
+  });
+
+  // ============== STEP 2: Departure ==============
+  document.getElementById('choices-dep').addEventListener('click', (e) => {
+    const btn = e.target.closest('.choice');
+    if (!btn) return;
+    document.querySelectorAll('#choices-dep .choice').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.dep = btn.dataset.country;
+    document.getElementById('btn-next-2').disabled = false;
+    // Update destination choices to exclude departure
+    populateCountryChoices('choices-arr', state.dep);
+  });
+  document.getElementById('btn-back-2').addEventListener('click', () => goToStep(1));
+  document.getElementById('btn-next-2').addEventListener('click', () => {
+    if (state.dep) goToStep(3);
+  });
+  document.getElementById('search-dep').addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('#choices-dep .choice').forEach(c => {
+      const label = c.querySelector('.label').textContent.toLowerCase();
+      c.style.display = label.includes(q) ? '' : 'none';
+    });
+  });
+
+  // ============== STEP 3: Destination ==============
+  document.getElementById('choices-arr').addEventListener('click', (e) => {
+    const btn = e.target.closest('.choice');
+    if (!btn) return;
+    document.querySelectorAll('#choices-arr .choice').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.arr = btn.dataset.country;
+    document.getElementById('btn-compute').disabled = false;
+  });
+  document.getElementById('btn-back-3').addEventListener('click', () => goToStep(2));
+  document.getElementById('search-arr').addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('#choices-arr .choice').forEach(c => {
+      const label = c.querySelector('.label').textContent.toLowerCase();
+      c.style.display = label.includes(q) ? '' : 'none';
+    });
+  });
+
+  // ============== COMPUTE & DISPLAY RESULT ==============
+  document.getElementById('btn-compute').addEventListener('click', () => {
+    if (!state.animal || !state.dep || !state.arr) return;
+    computeAndDisplay();
+  });
+
+  function computeAndDisplay() {
+    const dep = COUNTRIES[state.dep];
+    const arr = COUNTRIES[state.arr];
+    const animal = state.animal;
+
+
+    // Timeline — show first 4, blur next 3
+    const VISIBLE = 4;
+    const tl = document.getElementById('timeline');
+    tl.innerHTML = '';
+    requirements.forEach((req, idx) => {
+      const item = document.createElement('div');
+      item.className = 'timeline-item' + (idx >= VISIBLE ? ' locked' : '');
+      item.innerHTML = `
+        <div class="timeline-deadline ${req.kind}">${req.deadline}</div>
+        <div class="timeline-content">
+          <h4>${req.title}</h4>
+          <p>${req.desc}</p>
+        </div>
+      `;
+      tl.appendChild(item);
+    });
+
+    // Hide wizard, show result
+    document.getElementById('hero-wizard').style.display = 'none';
+    document.getElementById('wizard').style.display = 'none';
+    document.getElementById('result-wrap').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Save in storage for re-display
+    try { sessionStorage.setItem('petready-simulator', JSON.stringify(state)); } catch(e) {}
+  }
+
+  function restartWizard() {
+    state.animal = null;
+    state.dep = null;
+    state.arr = null;
+    document.querySelectorAll('.choice.selected').forEach(c => c.classList.remove('selected'));
+    document.getElementById('btn-next-1').disabled = true;
+    document.getElementById('btn-next-2').disabled = true;
+    document.getElementById('btn-compute').disabled = true;
+    document.getElementById('hero-wizard').style.display = 'block';
+    document.getElementById('wizard').style.display = 'block';
+    document.getElementById('result-wrap').classList.remove('show');
+    goToStep(1);
+  }
+
+  // Expose for inline onclick
+  window.restartWizard = restartWizard;
+</script>
+
+</body>
+</html>

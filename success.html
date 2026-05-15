@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merci ! — Votre pack PetReady est prêt</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7HFQR7V9WF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-7HFQR7V9WF");
+  </script>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="petready_logo_mark.svg">
+<style>
+  :root {
+    --navy: #0E2A47;
+    --navy-soft: #1B3B5F;
+    --sand: #F5EFE6;
+    --coral: #FF6B5B;
+    --coral-deep: #E8554A;
+    --ink: #0E2A47;
+    --muted: #6B7A8F;
+    --line: #E2D9C8;
+    --green: #34A853;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--sand);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+  a { color: inherit; text-decoration: none; }
+
+  .topbar {
+    background: white; border-bottom: 1px solid var(--line);
+    padding: 16px 24px;
+  }
+  .topbar-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
+  .nav-logo svg { width: 32px; height: 32px; }
+  .nav-logo .pet { color: var(--navy); }
+  .nav-logo .ready { color: var(--coral); }
+
+  main {
+    max-width: 720px; margin: 0 auto;
+    padding: 60px 24px;
+  }
+
+  .success-card {
+    background: white; border-radius: 22px; padding: 56px 48px;
+    text-align: center;
+    box-shadow: 0 30px 60px -20px rgba(14, 42, 71, 0.15);
+  }
+  .check-circle {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: #E7F0E8; color: var(--green);
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    animation: pop 0.5s ease-out;
+  }
+  .check-circle svg { width: 40px; height: 40px; }
+  @keyframes pop {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+
+  h1 { font-size: clamp(32px, 4vw, 44px); line-height: 1.1; letter-spacing: -1.2px; margin-bottom: 16px; }
+  .lead { font-size: 18px; color: var(--navy-soft); margin-bottom: 36px; }
+  .lead strong { color: var(--ink); }
+
+  .download-block {
+    background: var(--sand); border-radius: 16px; padding: 28px;
+    margin-bottom: 28px;
+    text-align: left;
+  }
+  .download-block h2 {
+    font-size: 16px; font-weight: 700; margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: 1px; color: var(--coral);
+  }
+  .download-block p { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+  .btn-download {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--navy); color: white;
+    padding: 14px 24px; border-radius: 999px;
+    font-size: 15px; font-weight: 600;
+  }
+  .btn-download svg { width: 18px; height: 18px; }
+
+  .next-steps {
+    text-align: left; background: white; padding: 32px 0 0;
+  }
+  .next-steps h2 { font-size: 22px; margin-bottom: 24px; letter-spacing: -0.5px; }
+  .next-steps ol { padding-left: 0; list-style: none; counter-reset: step; }
+  .next-steps li {
+    display: flex; gap: 16px; margin-bottom: 18px;
+    align-items: flex-start;
+  }
+  .next-steps li::before {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--coral); color: white;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+  }
+  .next-steps li strong { display: block; margin-bottom: 4px; font-size: 15px; }
+  .next-steps li span { color: var(--muted); font-size: 14px; }
+
+  .secondary-card {
+    background: white; border-radius: 18px; padding: 28px;
+    margin-top: 24px; text-align: center;
+  }
+  .secondary-card h3 { font-size: 18px; margin-bottom: 8px; }
+  .secondary-card p { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+  .btn-share {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; color: var(--navy); border: 1.5px solid var(--navy);
+    padding: 10px 20px; border-radius: 999px;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+  }
+  .btn-share:hover { background: var(--navy); color: white; }
+
+  .footer-help {
+    text-align: center; margin-top: 40px;
+    font-size: 14px; color: var(--muted);
+  }
+  .footer-help a { color: var(--navy); font-weight: 600; }
+
+  @media (max-width: 640px) {
+    .success-card { padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="120" height="120" rx="28" fill="#0E2A47"/>
+        <g fill="#F5EFE6">
+          <ellipse cx="60" cy="78" rx="22" ry="18"/>
+          <ellipse cx="60" cy="36" rx="9" ry="12"/>
+          <ellipse cx="34" cy="46" rx="8.5" ry="11" transform="rotate(-25 34 46)"/>
+          <ellipse cx="86" cy="46" rx="8.5" ry="11" transform="rotate(25 86 46)"/>
+          <ellipse cx="22" cy="68" rx="7.5" ry="9.5" transform="rotate(-50 22 68)"/>
+          <ellipse cx="98" cy="68" rx="7.5" ry="9.5" transform="rotate(50 98 68)"/>
+        </g>
+        <path d="M48 78 L57 87 L74 70" fill="none" stroke="#FF6B5B" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span><span class="pet">Pet</span><span class="ready">Ready</span></span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="success-card">
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="4 12 10 18 20 6"/></svg>
+    </div>
+    <h1 class="serif">Merci <span id="hello-name">Léa</span> !</h1>
+    <p class="lead">Votre commande est confirmée. Un email de confirmation avec votre facture vient de partir vers <strong id="hello-email">votre adresse</strong>.</p>
+
+    <div class="download-block">
+      <h2>📦 Votre pack est prêt</h2>
+      <p>Cliquez ci-dessous pour télécharger le PDF, le Google Sheet et l'ensemble des modèles.</p>
+      <a href="#" class="btn-download" id="download-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Télécharger mon pack PetReady
+      </a>
+      <p style="font-size: 12px; margin-top: 14px; color: var(--muted);">Ce lien restera actif. Vous le recevez aussi par email.</p>
+    </div>
+
+    <div class="next-steps">
+      <h2>Les 3 prochaines étapes</h2>
+      <ol>
+        <li>
+          <div>
+            <strong>Ouvrez le PDF et lisez l'introduction (10 min)</strong>
+            <span>Elle vous explique comment utiliser le pack et dans quel ordre attaquer les démarches.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Dupliquez le Google Sheet "compteur de jours"</strong>
+            <span>Entrez votre date de voyage. Il vous donnera immédiatement vos deadlines critiques.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Prenez RDV avec votre vétérinaire</strong>
+            <span>Utilisez le modèle de courrier #1 du pack pour gagner du temps.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="secondary-card" style="background: linear-gradient(135deg, #1B3B5F 0%, #0E2A47 100%); color: white;">
+    <h3 style="color: white;">✈️ Travel Pass arrive fin 2026</h3>
+    <p style="color: #B8C5D6;">En tant que client Travel Plan, vous avez automatiquement <strong style="color: var(--coral);">-50% à vie</strong> sur l'abonnement Travel Pass au lancement. Profil animal sauvé, génération auto de documents, alertes par email — l'assistant illimité.</p>
+    <p style="color: #B8C5D6; font-size: 13px; margin-top: 8px;">📨 On vous notifie au lancement, sans rien faire.</p>
+  </div>
+
+  <div class="secondary-card">
+    <h3>🎁 Aidez-nous à aider d'autres voyageurs</h3>
+    <p>Si le pack vous est utile, partagez-le. Tous les retours nous aident à améliorer le contenu.</p>
+    <button class="btn-share" onclick="shareIt()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Partager PetReady
+    </button>
+  </div>
+
+  <div class="footer-help">
+    Une question, un problème ? Écrivez à <a href="mailto:hello@petready.com">hello@petready.com</a> — réponse sous 24h.
+  </div>
+
+</main>
+
+<script>
+  // Personalize from sessionStorage (set on checkout page)
+  try {
+    const firstname = sessionStorage.getItem('petready-firstname');
+    const email = sessionStorage.getItem('petready-email');
+    if (firstname) document.getElementById('hello-name').textContent = firstname;
+    if (email) document.getElementById('hello-email').textContent = email;
+  } catch(e) {}
+
+  // Plan from URL param → for the right download link
+  // ⚠️ REMPLACE ces URLs par tes vrais liens de téléchargement (Google Drive, Dropbox, S3, etc.)
+  const DOWNLOADS = {
+    standard: 'https://drive.google.com/uc?export=download&id=REMPLACE_STANDARD',
+    multi: 'https://drive.google.com/uc?export=download&id=REMPLACE_MULTI',
+    premium: 'https://drive.google.com/uc?export=download&id=REMPLACE_PREMIUM'
+  };
+  const urlParams = new URLSearchParams(window.location.search);
+  const plan = urlParams.get('plan') || 'multi';
+  const downloadLink = document.getElementById('download-link');
+  if (DOWNLOADS[plan]) {
+    downloadLink.href = DOWNLOADS[plan];
+  }
+
+  // Share function
+  function shareIt() {
+    const url = 'https://petready.com';
+    const text = "Je viens d'acheter PetReady — le pack qui m'évite l'enfer administratif pour voyager avec mon animal. Je le recommande 🐾";
+    if (navigator.share) {
+      navigator.share({ title: 'PetReady', text, url });
+    } else {
+      navigator.clipboard.writeText(url + ' — ' + text);
+      alert('Lien copié dans le presse-papier !');
+    }
+  }
+</script>
+
+</body>
+</html>

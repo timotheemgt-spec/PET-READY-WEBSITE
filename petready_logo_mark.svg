@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="PetReady mark">
+  <title>PetReady mark</title>
+  <rect x="0" y="0" width="120" height="120" rx="28" ry="28" fill="#0E2A47"/>
+  <g fill="#F5EFE6">
+    <ellipse cx="60" cy="78" rx="22" ry="18"/>
+    <ellipse cx="60" cy="36" rx="9" ry="12"/>
+    <ellipse cx="34" cy="46" rx="8.5" ry="11" transform="rotate(-25 34 46)"/>
+    <ellipse cx="86" cy="46" rx="8.5" ry="11" transform="rotate(25 86 46)"/>
+    <ellipse cx="22" cy="68" rx="7.5" ry="9.5" transform="rotate(-50 22 68)"/>
+    <ellipse cx="98" cy="68" rx="7.5" ry="9.5" transform="rotate(50 98 68)"/>
+  </g>
+  <path d="M48 78 L57 87 L74 70" fill="none" stroke="#FF6B5B" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

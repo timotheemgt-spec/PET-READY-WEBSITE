@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Pack PetReady — Espace client</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7HFQR7V9WF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-7HFQR7V9WF");
+  </script>
+<meta name="description" content="Accédez à votre pack PetReady : PDF, compteur de jours, modèles de courriers et ressources.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="petready_logo_mark.svg">
+<style>
+  :root {
+    --navy: #0E2A47;
+    --navy-soft: #1B3B5F;
+    --sand: #F5EFE6;
+    --sand-deep: #ECE3D2;
+    --coral: #FF6B5B;
+    --coral-deep: #E8554A;
+    --ink: #0E2A47;
+    --muted: #6B7A8F;
+    --line: #E2D9C8;
+    --green: #34A853;
+    --green-light: #DCEEDF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--sand);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .serif { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+  a { color: var(--coral-deep); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* === TOP BAR === */
+  .topbar {
+    background: var(--navy);
+    color: white;
+    padding: 16px 0;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .topbar-inner {
+    max-width: 1080px; margin: 0 auto;
+    padding: 0 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: white; }
+  .nav-logo svg { width: 32px; height: 32px; }
+  .nav-logo .pet { color: white; }
+  .nav-logo .ready { color: var(--coral); }
+  .nav-badge {
+    background: var(--coral);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+  }
+  .nav-right { display: flex; gap: 20px; align-items: center; font-size: 14px; }
+  .nav-right a { color: #B8C5D6; }
+  .nav-right a:hover { color: white; text-decoration: none; }
+
+  /* === HERO === */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+    color: white;
+    padding: 56px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,107,91,0.18) 0%, transparent 70%);
+  }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    color: var(--coral);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+  .hero h1 .accent { color: var(--coral); }
+  .hero-lead { font-size: 17px; color: #B8C5D6; max-width: 680px; margin-bottom: 32px; }
+  .plan-chip {
+    display: inline-block;
+    background: rgba(255, 107, 91, 0.15);
+    border: 1px solid var(--coral);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .plan-chip strong { color: var(--coral); }
+
+  /* === QUICK ACTIONS BAR === */
+  .quick-actions {
+    background: white;
+    border-radius: 18px;
+    padding: 24px;
+    margin-top: -40px;
+    box-shadow: 0 20px 50px -15px rgba(14, 42, 71, 0.18);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    position: relative;
+    z-index: 2;
+  }
+  .qa-item {
+    text-align: center;
+    padding: 14px 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .qa-item:hover { background: var(--sand); text-decoration: none; }
+  .qa-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--coral);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .qa-icon svg { width: 22px; height: 22px; }
+  .qa-label { font-weight: 600; font-size: 14px; color: var(--ink); }
+
+  /* === MAIN === */
+  main { padding: 60px 0 80px; }
+  .section { margin-bottom: 56px; }
+  .section-eyebrow {
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+    margin-bottom: 8px;
+  }
+  .section-sub { color: var(--muted); margin-bottom: 24px; }
+
+  /* === RESOURCE CARDS === */
+  .resources {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .res-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  .res-card.featured {
+    border: 2px solid var(--coral);
+    background: linear-gradient(135deg, #FFFCFB 0%, #FFF5F3 100%);
+  }
+  .res-card-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 14px;
+  }
+  .res-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--sand);
+    color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .res-icon svg { width: 24px; height: 24px; }
+  .res-card.featured .res-icon { background: var(--coral); color: white; }
+  .res-card h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+  .res-card p { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+  .res-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    background: var(--navy);
+    color: white;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.15s;
+  }
+  .res-btn:hover { background: var(--navy-soft); text-decoration: none; color: white; }
+  .res-btn.coral { background: var(--coral); }
+  .res-btn.coral:hover { background: var(--coral-deep); }
+  .res-btn svg { width: 14px; height: 14px; }
+  .res-card.locked { opacity: 0.6; pointer-events: none; }
+  .lock-tag {
+    background: var(--sand-deep);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    margin-left: 10px;
+    text-transform: uppercase;
+  }
+
+  /* === LETTERS SECTION === */
+  .letters-list { display: flex; flex-direction: column; gap: 10px; }
+  details.letter {
+    background: white;
+    border-radius: 14px;
+    padding: 18px 24px;
+    border: 1px solid var(--line);
+    transition: border-color 0.15s;
+  }
+  details.letter[open] { border-color: var(--coral); }
+  details.letter summary {
+    cursor: pointer; list-style: none;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  details.letter summary::-webkit-details-marker { display: none; }
+  details.letter summary::after {
+    content: "+";
+    color: var(--coral);
+    font-size: 22px;
+    font-weight: 400;
+    transition: transform 0.2s;
+    line-height: 1;
+  }
+  details.letter[open] summary::after { transform: rotate(45deg); }
+  .letter-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--sand);
+    color: var(--navy);
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  details.letter[open] .letter-num { background: var(--coral); color: white; }
+  .letter-content {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .letter-block {
+    background: var(--sand);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .letter-block pre {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    color: var(--ink);
+    margin: 0;
+  }
+  .letter-block .lang-tag {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--navy);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+  }
+  .copy-btn {
+    background: white;
+    border: 1.5px solid var(--navy);
+    color: var(--navy);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 10px;
+    font-family: inherit;
+  }
+  .copy-btn:hover { background: var(--navy); color: white; }
+  .copy-btn.copied { background: var(--green); border-color: var(--green); color: white; }
+
+  /* === HELP / FAQ === */
+  .help-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+  }
+  .help-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .help-card h3 {
+    font-size: 17px;
+    margin-bottom: 6px;
+  }
+  .help-card p { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 14px; }
+  .help-actions { display: flex; flex-direction: column; gap: 10px; }
+  .help-action {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--sand);
+    border-radius: 12px;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 14px;
+    transition: background 0.15s;
+  }
+  .help-action:hover { background: var(--sand-deep); text-decoration: none; }
+  .help-action svg { width: 16px; height: 16px; color: var(--coral); }
+
+  /* === UPSELL === */
+  .upsell {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+    border-radius: 22px;
+    padding: 40px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .upsell::before {
+    content: "";
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,107,91,0.25) 0%, transparent 70%);
+  }
+  .upsell-eyebrow {
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .upsell h2 { font-size: 28px; line-height: 1.2; letter-spacing: -0.8px; margin-bottom: 14px; position: relative; }
+  .upsell p { color: #B8C5D6; max-width: 600px; margin-bottom: 24px; position: relative; }
+  .upsell-cta {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    position: relative;
+    transition: background 0.15s;
+  }
+  .upsell-cta:hover { background: var(--coral-deep); text-decoration: none; color: white; }
+
+  /* === FOOTER === */
+  footer {
+    background: var(--navy);
+    color: #8896AB;
+    padding: 32px 0;
+    border-top: 1px solid #2C4A6E;
+    font-size: 13px;
+  }
+  .footer-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-inner a { color: white; }
+
+  /* === ACCESS DENIED === */
+  .denied {
+    max-width: 540px;
+    margin: 80px auto;
+    background: white;
+    border-radius: 18px;
+    padding: 48px 40px;
+    text-align: center;
+  }
+  .denied h1 { font-size: 28px; margin-bottom: 12px; }
+  .denied p { color: var(--muted); margin-bottom: 24px; }
+  .denied a {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .denied a:hover { background: var(--coral-deep); text-decoration: none; }
+
+  @media (max-width: 800px) {
+    .quick-actions { grid-template-columns: repeat(2, 1fr); }
+    .resources { grid-template-columns: 1fr; }
+    .help-grid { grid-template-columns: 1fr; }
+    .topbar-inner { flex-wrap: wrap; }
+    .nav-right { width: 100%; justify-content: flex-end; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============== TOP BAR ============== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="120" height="120" rx="28" fill="#0E2A47"/>
+        <g fill="#F5EFE6">
+          <ellipse cx="60" cy="78" rx="22" ry="18"/>
+          <ellipse cx="60" cy="36" rx="9" ry="12"/>
+          <ellipse cx="34" cy="46" rx="8.5" ry="11" transform="rotate(-25 34 46)"/>
+          <ellipse cx="86" cy="46" rx="8.5" ry="11" transform="rotate(25 86 46)"/>
+          <ellipse cx="22" cy="68" rx="7.5" ry="9.5" transform="rotate(-50 22 68)"/>
+          <ellipse cx="98" cy="68" rx="7.5" ry="9.5" transform="rotate(50 98 68)"/>
+        </g>
+        <path d="M48 78 L57 87 L74 70" fill="none" stroke="#FF6B5B" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span><span class="pet">Pet</span><span class="ready">Ready</span></span>
+      <span class="nav-badge">Mon pack</span>
+    </a>
+    <div class="nav-right">
+      <a href="#letters">Courriers</a>
+      <a href="#help">Aide</a>
+      <a href="mailto:hello@petready.fr">Support</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============== ACCESS GATE ============== -->
+<div id="access-denied" class="denied" style="display:none;">
+  <h1 class="serif">Accès réservé aux clients PetReady</h1>
+  <p>Cette page est l'espace personnel des acheteurs du Travel Plan. Si vous avez acheté un pack, le lien d'accès se trouve dans l'email de confirmation Stripe que vous avez reçu.</p>
+  <p style="font-size:13px;">Une question ? <a href="mailto:hello@petready.fr">hello@petready.fr</a></p>
+  <a href="index.html">← Retour à l'accueil</a>
+</div>
+
+<!-- ============== MAIN HUB CONTENT ============== -->
+<div id="hub-content" style="display:none;">
+
+  <!-- === HERO === -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-eyebrow">✓ Bienvenue chez PetReady</div>
+      <h1 class="serif">Votre pack est <span class="accent">prêt</span>.</h1>
+      <p class="hero-lead">Tout est ici. Téléchargez ce dont vous avez besoin, copiez les courriers, consultez votre compteur de jours, et préparez votre voyage l'esprit tranquille.</p>
+      <div class="plan-chip">Vous avez accès au pack <strong id="plan-name">Multi-destinations</strong></div>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- === QUICK ACTIONS === -->
+    <div class="quick-actions">
+      <a href="#" id="qa-pdf" class="qa-item">
+        <div class="qa-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="qa-label">PDF guide</div>
+      </a>
+      <a href="#" id="qa-sheet" class="qa-item">
+        <div class="qa-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        </div>
+        <div class="qa-label">Compteur</div>
+      </a>
+      <a href="#letters" class="qa-item">
+        <div class="qa-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="qa-label">Courriers</div>
+      </a>
+      <a href="mailto:hello@petready.fr" class="qa-item">
+        <div class="qa-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="qa-label">Support</div>
+      </a>
+    </div>
+
+    <main>
+
+      <!-- === RESOURCES === -->
+      <section class="section" id="resources">
+        <div class="section-eyebrow">Ressources principales</div>
+        <h2 class="section-title serif">Vos outils, prêts à utiliser.</h2>
+        <p class="section-sub">Tout votre pack PetReady en un coup d'œil.</p>
+
+        <div class="resources">
+
+          <div class="res-card featured">
+            <div class="res-card-header">
+              <div class="res-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <div>
+                <h3>Le guide PDF</h3>
+              </div>
+            </div>
+            <p>60 pages denses, à jour des règles 2026. Le manuel complet de A à Z : timeline, démarches, modèles, sources officielles.</p>
+            <a href="#" class="res-btn coral" id="dl-pdf">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Télécharger le PDF
+            </a>
+          </div>
+
+          <div class="res-card featured">
+            <div class="res-card-header">
+              <div class="res-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+              </div>
+              <div>
+                <h3>Le compteur de jours</h3>
+              </div>
+            </div>
+            <p>Entrez votre date de voyage, le compteur calcule automatiquement vos 13 deadlines critiques avec code couleur.</p>
+            <a href="#" class="res-btn coral" id="dl-sheet" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Ouvrir dans Google Sheets
+            </a>
+          </div>
+
+          <div class="res-card">
+            <div class="res-card-header">
+              <div class="res-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <h3>10 modèles de courriers</h3>
+              </div>
+            </div>
+            <p>Pré-rédigés bilingue FR/EN. Vétérinaire, USDA, compagnie aérienne, douanes... Vous remplissez les crochets, vous envoyez.</p>
+            <a href="#letters" class="res-btn">Voir les courriers ↓</a>
+          </div>
+
+          <div class="res-card" id="card-airlines">
+            <div class="res-card-header">
+              <div class="res-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <h3>Base compagnies aériennes <span class="lock-tag" id="lock-airlines" style="display:none;">Multi+</span></h3>
+              </div>
+            </div>
+            <p>Politique pets de 12 compagnies (Air France, Lufthansa, BA, Delta, KLM...). Dimensions, restrictions de race, embargo été.</p>
+            <a href="#" class="res-btn" id="dl-pdf-2">Inclus dans le PDF, ch. 8 ↗</a>
+          </div>
+
+          <div class="res-card" id="card-vets">
+            <div class="res-card-header">
+              <div class="res-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <h3>Vétos accrédités <span class="lock-tag" id="lock-vets" style="display:none;">Multi+</span></h3>
+              </div>
+            </div>
+            <p>Annexe spécifique : liste indicative des cabinets vétérinaires accrédités UE/USDA par grande ville française.</p>
+            <a href="#" class="res-btn" id="dl-pdf-3">Annexe C du PDF ↗</a>
+          </div>
+
+          <div class="res-card" id="card-telegram">
+            <div class="res-card-header">
+              <div class="res-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              </div>
+              <div>
+                <h3>Groupe Telegram <span class="lock-tag" id="lock-telegram" style="display:none;">Premium</span></h3>
+              </div>
+            </div>
+            <p>Communauté privée des voyageurs PetReady — partage de retours, mises à jour réglementaires en direct, entraide.</p>
+            <a href="#" class="res-btn" id="dl-telegram">Rejoindre le groupe</a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- === LETTERS === -->
+      <section class="section" id="letters">
+        <div class="section-eyebrow">Modèles de courriers</div>
+        <h2 class="section-title serif">10 emails prêts à coller.</h2>
+        <p class="section-sub">Cliquez sur un courrier pour le déplier, copiez le texte, remplacez les <code style="background:var(--sand-deep);padding:2px 6px;border-radius:4px;font-size:12px;">[À COMPLÉTER]</code> par vos infos.</p>
+
+        <div class="letters-list">
+
+          <details class="letter">
+            <summary><span class="letter-num">1</span>Demande de RDV véto pour certificat sanitaire (J-30)<span></span></summary>
+            <div class="letter-content">
+              <div class="letter-block">
+                <span class="lang-tag">FR</span>
+                <pre>Bonjour Docteur,
+
+Je m'appelle [VOTRE NOM] et je suis le/la propriétaire de [NOM ANIMAL], [ESPÈCE/RACE], âgé(e) de [ÂGE].
+
+Je voyage le [DATE VOYAGE] vers [DESTINATION] et je dois faire émettre un certificat sanitaire (modèle UE/USDA selon destination).
+
+Pourriez-vous me proposer un créneau autour du [DATE J-10 IDÉALE] pour un examen + émission du certificat ? Je viendrai avec le passeport européen, le carnet de vaccination, et tous les documents nécessaires.
+
+Merci par avance,
+[VOTRE NOM] / [TÉLÉPHONE]</pre>
+                <button class="copy-btn" data-copy-target="prev">Copier le texte</button>
+              </div>
+            </div>
+          </details>
+
+          <details class="letter">
+            <summary><span class="letter-num">2</span>Demande d'endossement USDA (J-7, USA uniquement)<span></span></summary>
+            <div class="letter-content">
+              <div class="letter-block">
+                <span class="lang-tag">EN</span>
+                <pre>To: USDA APHIS Veterinary Services
+Subject: Health Certificate Endorsement Request
+
+Dear APHIS officer,
+
+I am submitting an endorsement request for the international travel of my pet:
+- Pet name: [NOM ANIMAL]
+- Species/breed: [ESPÈCE/RACE]
+- Microchip: [NUMÉRO PUCE]
+- Travel date: [DATE]
+- Destination: USA — [VILLE]
+
+Health certificate issued on [DATE J-9] by [NOM VÉTO], USDA-accredited veterinarian.
+
+Attached documents: signed health certificate, rabies vaccination record, microchip documentation.
+
+Thank you,
+[VOTRE NOM] / [EMAIL]</pre>
+                <button class="copy-btn" data-copy-target="prev">Copier le texte</button>
+              </div>
+            </div>
+          </details>
+
+          <details class="letter">
+            <summary><span class="letter-num">3</span>Email à la compagnie aérienne (J-60)<span></span></summary>
+            <div class="letter-content">
+              <div class="letter-block">
+                <span class="lang-tag">FR</span>
+                <pre>Bonjour,
+
+Je viens de réserver le vol [NUMÉRO VOL] le [DATE] (référence [PNR]).
+
+Je voyage avec [NOM ANIMAL], [ESPÈCE/RACE], poids [KG], dans une cage de dimensions [L×l×h cm]. Je souhaite confirmer la place pour mon animal en [CABINE / SOUTE], et connaître les frais et la procédure d'enregistrement spécifique.
+
+Merci de me confirmer la disponibilité avant que je finalise les autres démarches.
+
+Cordialement,
+[VOTRE NOM] / [PNR]</pre>
+                <button class="copy-btn" data-copy-target="prev">Copier le texte</button>
+              </div>
+            </div>
+          </details>
+
+          <details class="letter">
+            <summary><span class="letter-num">4</span>Demande à la DDPP (cas litigieux)<span></span></summary>
+            <div class="letter-content">
+              <div class="letter-block">
+                <span class="lang-tag">FR</span>
+                <pre>À : Direction Départementale de la Protection des Populations de [DÉPARTEMENT]
+
+Madame, Monsieur,
+
+Je prépare un voyage vers [DESTINATION] avec mon animal de compagnie ([ESPÈCE], identifié [NUMÉRO PUCE]). J'ai une question spécifique : [DÉTAIL DE LA QUESTION].
+
+Pourriez-vous me confirmer la procédure applicable à mon cas ?
+
+Je vous remercie pour votre retour,
+[VOTRE NOM]</pre>
+                <button class="copy-btn" data-copy-target="prev">Copier le texte</button>
+              </div>
+            </div>
+          </details>
+
+          <details class="letter">
+            <summary><span class="letter-num">5</span>Demande de "pas de changement de cage" en transit<span></span></summary>
+            <div class="letter-content">
+              <div class="letter-block">
+                <span class="lang-tag">FR</span>
+                <pre>Bonjour,
+
+Je voyage le [DATE] avec mon animal en soute sur le vol [NUMÉRO]. J'ai compris qu'un changement de cage est parfois nécessaire en transit. Je vous demande explicitement d'éviter tout transfert de cage sauf en cas d'urgence sanitaire, et de m'en informer immédiatement si cela devait survenir.
+
+Mon animal est habitué à sa cage et un changement le stresserait significativement.
+
+Cordialement,
+[VOTRE NOM] / [PNR] / [TÉLÉPHONE]</pre>
+                <button class="copy-btn" data-copy-target="prev">Copier le texte</button>
+              </div>
+            </div>
+          </details>
+
+          <details class="letter">
+            <summary><span class="letter-num">6</span>Enregistrement à l'arrivée (UK, USA si requis)<span></span></summary>
+            <div class="letter-content">
+              <div class="letter-block">
+                <span class="lang-tag">FR / EN</span>
+                <pre>À : [Service vétérinaire ou autorité locale]
+
+Bonjour,
+
+Mon animal [NOM ANIMAL] ([ESPÈCE], puce [NUMÉRO]) est arrivé(e) le [DATE] à l'aéroport [NOM AÉROPORT]. Je souhaite l'enregistrer auprès de vos services comme requis.
+
+Documents joints : copie du certificat sanitaire endossé, copie du passeport, photo récente.
+
+Cordialement,
+[VOTRE NOM] / [ADRESSE LOCALE]</pre>
+                <button class="copy-btn" data-copy-target="prev">Copier le texte</button>
+              </div>
+            </div>
+          </details>
+
+          <details class="letter">
+            <summary><span class="letter-num">7</span>Réclamation après refus d'embarquement<span></span></summary>
+            <div class="letter-content">
+              <div class="letter-block">
+                <span class="lang-tag">FR</span>
+                <pre>À : Service Client [NOM COMPAGNIE]
+Objet : Réclamation suite à refus d'embarquement animal — vol [NUMÉRO]
+
+Madame, Monsieur,
+
+Mon animal [NOM] a été refusé à l'embarquement le [DATE] sur le vol [NUMÉRO] pour le motif suivant : [MOTIF]. Tous mes documents étaient pourtant en règle, comme le prouvent les pièces jointes : certificat sanitaire, passeport, endossement officiel.
+
+Je sollicite : (1) un re-routing immédiat sur un vol équivalent ; (2) une explication écrite du motif ; (3) le remboursement des frais engagés.
+
+Cordialement,
+[VOTRE NOM] / [PNR]</pre>
+                <button class="copy-btn" data-copy-target="prev">Copier le texte</button>
+              </div>
+            </div>
+          </details>
+
+          <details class="letter">
+            <summary><span class="letter-num">8</span>Demande de remboursement billet (raison médicale animal)<span></span></summary>
+            <div class="letter-content">
+              <div class="letter-block">
+                <span class="lang-tag">FR</span>
+                <pre>À : Service Client [NOM COMPAGNIE]
+
+Madame, Monsieur,
+
+Suite à un avis vétérinaire daté du [DATE] (joint), mon animal n'est plus apte à voyager pour raison médicale. Je sollicite le remboursement intégral du billet [NUMÉRO PNR] correspondant au vol [NUMÉRO] du [DATE].
+
+Pièces jointes : certificat vétérinaire, copie billet, copie passeport animal.
+
+Cordialement,
+[VOTRE NOM]</pre>
+                <button class="copy-btn" data-copy-target="prev">Copier le texte</button>
+              </div>
+            </div>
+          </details>
+
+          <details class="letter">
+            <summary><span class="letter-num">9</span>Email au pet sitter / hébergement à l'arrivée<span></span></summary>
+            <div class="letter-content">
+              <div class="letter-block">
+                <span class="lang-tag">FR</span>
+                <pre>Bonjour,
+
+Je vous confirme l'arrivée le [DATE] avec mon animal [NOM]. Quelques infos utiles :
+- Race : [RACE], poids [KG], âge [ÂGE]
+- Régime alimentaire : [DÉTAIL]
+- Habitudes : [SOMMEIL / EXERCICE / PARTICULARITÉS]
+- Médicament(s) en cours : [SI APPLICABLE]
+- Vétérinaire de référence en France : [COORDONNÉES]
+
+Merci pour votre accueil,
+[VOTRE NOM]</pre>
+                <button class="copy-btn" data-copy-target="prev">Copier le texte</button>
+              </div>
+            </div>
+          </details>
+
+          <details class="letter">
+            <summary><span class="letter-num">10</span>Transfert dossier véto (déménagement)<span></span></summary>
+            <div class="letter-content">
+              <div class="letter-block">
+                <span class="lang-tag">FR</span>
+                <pre>À : Cabinet Vétérinaire [NOM ANCIEN VÉTO]
+
+Bonjour Docteur,
+
+Suite à mon déménagement vers [VILLE / PAYS], je vous remercie de bien vouloir transférer le dossier complet de mon animal [NOM] (puce [NUMÉRO]) au Dr [NOM NOUVEAU VÉTO] ([ADRESSE / EMAIL]).
+
+J'autorise par la présente cette transmission. Merci pour ces années de soins,
+
+Cordialement,
+[VOTRE NOM]</pre>
+                <button class="copy-btn" data-copy-target="prev">Copier le texte</button>
+              </div>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <!-- === HELP === -->
+      <section class="section" id="help">
+        <div class="section-eyebrow">Aide et support</div>
+        <h2 class="section-title serif">Une question ? On répond.</h2>
+
+        <div class="help-grid">
+
+          <div class="help-card">
+            <h3>Comment utiliser le pack le plus efficacement ?</h3>
+            <p>L'ordre conseillé : (1) lisez le chapitre 1 du PDF, (2) dupliquez le compteur Google Sheet dans votre Drive, (3) entrez votre date de voyage, (4) suivez les deadlines colorées, (5) ressortez les courriers au fur et à mesure des étapes.</p>
+            <p style="margin-top:14px;"><strong>Astuce</strong> : épinglez cette page (`mon-pack`) dans vos favoris pour y revenir rapidement.</p>
+          </div>
+
+          <div class="help-card">
+            <h3>Mises à jour</h3>
+            <p>Cette page est mise à jour automatiquement quand le pack évolue. Les règles 2026 sont à jour ; on vous prévient par email à chaque changement réglementaire majeur.</p>
+            <div class="help-actions" style="margin-top:14px;">
+              <a href="mailto:hello@petready.fr?subject=Question%20pack%20PetReady" class="help-action">
+                Contacter le support
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+              <a href="legal.html" class="help-action">
+                CGV / Mentions légales
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- === UPSELL Travel Pass === -->
+      <section class="section" id="upsell">
+        <div class="upsell">
+          <div class="upsell-eyebrow">✈️ Bientôt — Fin 2026</div>
+          <h2 class="serif">Travel Pass — votre prochain niveau de tranquillité.</h2>
+          <p>Pour les voyageurs réguliers et expats : abonnement annuel avec profil animal sauvegardé, alertes auto par email à chaque deadline, et base de pays toujours à jour. <strong style="color:white;">En tant que client Travel Plan, vous avez automatiquement -50% à vie sur la 1ère année.</strong></p>
+          <a href="index.html#travel-pass" class="upsell-cta">Voir Travel Pass →</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 PetReady — Voyagez sereinement.</div>
+    <div>
+      <a href="mailto:hello@petready.fr">hello@petready.fr</a> · <a href="index.html">Retour au site</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ============== CONFIGURATION ==============
+  //
+  // ⚠️ À PERSONNALISER PAR TIM :
+  //
+  // 1. Remplace les URLs ci-dessous par tes vrais liens Google Drive
+  //    PDF : Format "https://drive.google.com/uc?export=download&id=FILE_ID"
+  //    Sheet (avec /copy) : "https://docs.google.com/spreadsheets/d/SHEET_ID/copy"
+  //
+  // 2. Active/désactive les modules selon les plans dans la table PLAN_FEATURES
+  //
+  // ============================================
+
+  const RESOURCES = {
+    pdf: 'https://drive.google.com/uc?export=download&id=1gSK0MeNaTiVLe1cSOOvXQtGe_h3adBqJ',
+    sheet: 'https://docs.google.com/spreadsheets/d/1MhKNH4O1haBvG_GpLkfxkk2LKlzPOhTbTvK-h_oBczc/copy',
+    telegram: 'https://t.me/+REMPLACE_LIEN_TELEGRAM'  // TODO: créer le groupe Telegram quand 10+ clients Premium
+  };
+
+  // Modules accessibles selon le plan acheté
+  const PLAN_FEATURES = {
+    standard: {
+      name: 'Standard',
+      tagline: '1 destination au choix',
+      airlines: true,    // accessible (dans le PDF)
+      vets: false,        // verrouillé
+      telegram: false,    // verrouillé
+    },
+    multi: {
+      name: 'Multi-destinations',
+      tagline: 'Toutes destinations + 1 mise à jour à 6 mois',
+      airlines: true,
+      vets: true,
+      telegram: false,
+    },
+    premium: {
+      name: 'Premium',
+      tagline: 'Toutes destinations + mises à jour à vie + Telegram',
+      airlines: true,
+      vets: true,
+      telegram: true,
+    }
+  };
+
+  // ============== ACCESS CONTROL ==============
+  const urlParams = new URLSearchParams(window.location.search);
+  const plan = urlParams.get('plan');
+
+  if (!plan || !PLAN_FEATURES[plan]) {
+    // Pas de plan valide → page d'accès refusé
+    document.getElementById('access-denied').style.display = 'block';
+  } else {
+    // Plan valide → afficher le hub
+    document.getElementById('hub-content').style.display = 'block';
+    initHub(plan);
+  }
+
+  function initHub(planKey) {
+    const features = PLAN_FEATURES[planKey];
+
+    // Personnalisation du header
+    document.getElementById('plan-name').textContent = features.name;
+    document.title = `Mon pack ${features.name} — PetReady`;
+
+    // Configuration des liens de téléchargement
+    document.getElementById('qa-pdf').href = RESOURCES.pdf;
+    document.getElementById('qa-pdf').target = '_blank';
+    document.getElementById('qa-sheet').href = RESOURCES.sheet;
+    document.getElementById('qa-sheet').target = '_blank';
+    document.getElementById('dl-pdf').href = RESOURCES.pdf;
+    document.getElementById('dl-pdf').target = '_blank';
+    document.getElementById('dl-sheet').href = RESOURCES.sheet;
+    document.getElementById('dl-pdf-2').href = RESOURCES.pdf;
+    document.getElementById('dl-pdf-2').target = '_blank';
+    document.getElementById('dl-pdf-3').href = RESOURCES.pdf;
+    document.getElementById('dl-pdf-3').target = '_blank';
+    document.getElementById('dl-telegram').href = RESOURCES.telegram;
+    document.getElementById('dl-telegram').target = '_blank';
+
+    // Gestion des features verrouillées selon le plan
+    if (!features.airlines) {
+      document.getElementById('card-airlines').classList.add('locked');
+      document.getElementById('lock-airlines').style.display = 'inline-block';
+    }
+    if (!features.vets) {
+      document.getElementById('card-vets').classList.add('locked');
+      document.getElementById('lock-vets').style.display = 'inline-block';
+    }
+    if (!features.telegram) {
+      document.getElementById('card-telegram').classList.add('locked');
+      document.getElementById('lock-telegram').style.display = 'inline-block';
+    }
+
+    // Log analytics (optionnel)
+    try {
+      const ts = Date.now();
+      console.log(`[PetReady] Hub access: plan=${planKey} at ${new Date(ts).toISOString()}`);
+    } catch(e) {}
+  }
+
+  // ============== COPY BUTTONS ==============
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pre = btn.parentElement.querySelector('pre');
+      if (!pre) return;
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Copié !';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(() => {
+        alert('Erreur de copie. Sélectionnez le texte manuellement.');
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

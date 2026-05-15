@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — PetReady</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7HFQR7V9WF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-7HFQR7V9WF");
+  </script>
+<meta name="description" content="Finalisez votre commande PetReady. Paiement sécurisé Stripe, téléchargement immédiat, garantie 14 jours.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="petready_logo_mark.svg">
+<style>
+  :root {
+    --navy: #0E2A47;
+    --navy-soft: #1B3B5F;
+    --sand: #F5EFE6;
+    --sand-deep: #ECE3D2;
+    --coral: #FF6B5B;
+    --coral-deep: #E8554A;
+    --ink: #0E2A47;
+    --muted: #6B7A8F;
+    --line: #E2D9C8;
+    --green: #34A853;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--sand);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .serif { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+  a { color: inherit; text-decoration: none; }
+
+  /* Top bar */
+  .topbar {
+    background: white;
+    border-bottom: 1px solid var(--line);
+    padding: 16px 24px;
+  }
+  .topbar-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
+  .nav-logo svg { width: 32px; height: 32px; }
+  .nav-logo .pet { color: var(--navy); }
+  .nav-logo .ready { color: var(--coral); }
+  .secure-badge {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--muted); font-weight: 500;
+  }
+  .secure-badge svg { width: 16px; height: 16px; color: var(--green); }
+
+  /* Layout */
+  main {
+    max-width: 1100px; margin: 0 auto;
+    padding: 60px 24px;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px;
+    align-items: flex-start;
+  }
+  h1 { font-size: clamp(32px, 4vw, 44px); line-height: 1.1; letter-spacing: -1.2px; margin-bottom: 12px; }
+  .subtitle { color: var(--muted); margin-bottom: 36px; font-size: 16px; }
+
+  /* Form */
+  .form-section {
+    background: white; border-radius: 18px; padding: 32px;
+    margin-bottom: 16px;
+  }
+  .form-section h2 {
+    font-size: 18px; font-weight: 700; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--navy); color: white;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+  }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .field input, .field select {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--line);
+    border-radius: 10px; font-size: 15px; font-family: inherit;
+    background: white; transition: border-color 0.15s;
+  }
+  .field input:focus, .field select:focus {
+    outline: none; border-color: var(--navy);
+  }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Plan selector */
+  .plan-options { display: flex; flex-direction: column; gap: 10px; }
+  .plan-option {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px; border: 2px solid var(--line); border-radius: 12px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .plan-option:hover { border-color: var(--navy-soft); }
+  .plan-option.selected { border-color: var(--coral); background: #FFF5F3; }
+  .plan-option input { margin: 0; }
+  .plan-option-info { flex-grow: 1; }
+  .plan-option-name { font-weight: 600; font-size: 15px; }
+  .plan-option-desc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .plan-option-price { font-weight: 700; font-size: 18px; color: var(--navy); }
+
+  /* Pay button */
+  .pay-button {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 18px 24px;
+    background: var(--coral); color: white;
+    border: none; border-radius: 999px;
+    font-family: inherit; font-size: 17px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s;
+    margin-top: 8px;
+  }
+  .pay-button:hover { background: var(--coral-deep); transform: translateY(-1px); }
+  .pay-button svg { width: 18px; height: 18px; }
+
+  /* Order summary (right side) */
+  .summary-card {
+    background: white; border-radius: 18px; padding: 32px;
+    position: sticky; top: 24px;
+  }
+  .summary-card h2 {
+    font-size: 18px; font-weight: 700; margin-bottom: 20px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--line);
+  }
+  .summary-product {
+    display: flex; gap: 14px; padding-bottom: 20px; border-bottom: 1px solid var(--line); margin-bottom: 20px;
+  }
+  .summary-product-icon {
+    width: 56px; height: 56px; border-radius: 12px; background: var(--navy);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .summary-product-icon svg { width: 28px; height: 28px; color: var(--coral); }
+  .summary-product-info { flex-grow: 1; }
+  .summary-product-name { font-weight: 600; font-size: 15px; }
+  .summary-product-meta { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .summary-includes { margin-bottom: 20px; }
+  .summary-includes li {
+    list-style: none; padding: 8px 0 8px 26px; font-size: 14px;
+    position: relative; color: var(--ink);
+  }
+  .summary-includes li::before {
+    content: ""; position: absolute; left: 0; top: 12px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: #E7F0E8 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2334A853' stroke-width='3'><polyline points='4 12 10 18 20 6'/></svg>") center/10px no-repeat;
+  }
+  .summary-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 15px; }
+  .summary-row.muted { color: var(--muted); font-size: 13px; }
+  .summary-total {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 16px; border-top: 1px solid var(--line); margin-top: 12px;
+  }
+  .summary-total span:first-child { font-size: 16px; font-weight: 600; }
+  .summary-total span:last-child { font-size: 28px; font-weight: 800; color: var(--navy); letter-spacing: -1px; }
+
+  .trust-points {
+    margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .trust-points li {
+    list-style: none; display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--muted);
+  }
+  .trust-points svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
+
+  .legal {
+    font-size: 12px; color: var(--muted);
+    text-align: center; margin-top: 32px;
+    max-width: 600px; margin-left: auto; margin-right: auto;
+  }
+  .legal a { color: var(--navy); text-decoration: underline; }
+
+  @media (max-width: 880px) {
+    main { grid-template-columns: 1fr; gap: 24px; padding: 32px 16px; }
+    .summary-card { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="120" height="120" rx="28" fill="#0E2A47"/>
+        <g fill="#F5EFE6">
+          <ellipse cx="60" cy="78" rx="22" ry="18"/>
+          <ellipse cx="60" cy="36" rx="9" ry="12"/>
+          <ellipse cx="34" cy="46" rx="8.5" ry="11" transform="rotate(-25 34 46)"/>
+          <ellipse cx="86" cy="46" rx="8.5" ry="11" transform="rotate(25 86 46)"/>
+          <ellipse cx="22" cy="68" rx="7.5" ry="9.5" transform="rotate(-50 22 68)"/>
+          <ellipse cx="98" cy="68" rx="7.5" ry="9.5" transform="rotate(50 98 68)"/>
+        </g>
+        <path d="M48 78 L57 87 L74 70" fill="none" stroke="#FF6B5B" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span><span class="pet">Pet</span><span class="ready">Ready</span></span>
+    </a>
+    <div class="secure-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Paiement 100% sécurisé
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- LEFT: form -->
+  <div>
+    <h1 class="serif">Finaliser votre commande</h1>
+    <p class="subtitle">Téléchargement immédiat. Garantie 14 jours satisfait ou remboursé.</p>
+
+    <!-- STEP 1: Plan -->
+    <section class="form-section">
+      <h2><span class="step-num">1</span> Votre formule</h2>
+      <div class="plan-options" id="plan-options">
+        <label class="plan-option" data-plan="standard">
+          <input type="radio" name="plan" value="standard">
+          <div class="plan-option-info">
+            <div class="plan-option-name">Standard</div>
+            <div class="plan-option-desc">1 destination au choix</div>
+          </div>
+          <div class="plan-option-price">49€</div>
+        </label>
+        <label class="plan-option selected" data-plan="multi">
+          <input type="radio" name="plan" value="multi" checked>
+          <div class="plan-option-info">
+            <div class="plan-option-name">Multi-destinations <span style="background:var(--coral);color:white;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.5px;margin-left:6px;">RECOMMANDÉ</span></div>
+            <div class="plan-option-desc">Toutes destinations + 1 mise à jour à 6 mois</div>
+          </div>
+          <div class="plan-option-price">79€</div>
+        </label>
+        <label class="plan-option" data-plan="premium">
+          <input type="radio" name="plan" value="premium">
+          <div class="plan-option-info">
+            <div class="plan-option-name">Premium</div>
+            <div class="plan-option-desc">Mises à jour à vie + Telegram</div>
+          </div>
+          <div class="plan-option-price">149€</div>
+        </label>
+      </div>
+    </section>
+
+    <!-- STEP 2: Email -->
+    <section class="form-section">
+      <h2><span class="step-num">2</span> Vos coordonnées</h2>
+      <div class="field">
+        <label for="email">Email (où vous recevrez votre pack)</label>
+        <input type="email" id="email" placeholder="vous@exemple.com" required>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="firstname">Prénom</label>
+          <input type="text" id="firstname" placeholder="Léa" required>
+        </div>
+        <div class="field">
+          <label for="lastname">Nom</label>
+          <input type="text" id="lastname" placeholder="Martin" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="country">Pays</label>
+        <select id="country">
+          <option>France</option>
+          <option>Belgique</option>
+          <option>Suisse</option>
+          <option>Luxembourg</option>
+          <option>Canada</option>
+          <option>United Kingdom</option>
+          <option>United States</option>
+          <option>Autre</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- STEP 3: Pay -->
+    <section class="form-section">
+      <h2><span class="step-num">3</span> Paiement</h2>
+      <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">
+        Vous serez redirigé vers <strong>Stripe</strong>, notre prestataire de paiement sécurisé. Cartes acceptées : Visa, Mastercard, Amex, Apple Pay, Google Pay.
+      </p>
+      <button class="pay-button" id="pay-btn" onclick="goToPayment()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Payer <span id="pay-amount">79€</span> en sécurité →
+      </button>
+      <p style="font-size: 12px; color: var(--muted); margin-top: 12px; text-align: center;">
+        🔒 Connexion chiffrée SSL · Aucun numéro de carte stocké chez nous
+      </p>
+    </section>
+
+  </div>
+
+  <!-- RIGHT: order summary -->
+  <aside>
+    <div class="summary-card">
+      <h2>Récapitulatif de commande</h2>
+
+      <div class="summary-product">
+        <div class="summary-product-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="summary-product-info">
+          <div class="summary-product-name">PetReady — <span id="plan-name">Multi-destinations</span></div>
+          <div class="summary-product-meta">Téléchargement digital · Livré en 2 min</div>
+        </div>
+      </div>
+
+      <ul class="summary-includes" id="includes-list">
+        <li>PDF guide complet (60-80 pages)</li>
+        <li>Compteur de jours (Google Sheet)</li>
+        <li>10 modèles de courriers FR/EN</li>
+        <li>Base "compagnies aériennes"</li>
+        <li>Annexe vétos accrédités</li>
+        <li>1 mise à jour à 6 mois</li>
+      </ul>
+
+      <div class="summary-row muted">
+        <span>Sous-total HT</span>
+        <span id="subtotal-ht">65,83€</span>
+      </div>
+      <div class="summary-row muted">
+        <span>TVA 20%</span>
+        <span id="vat">13,17€</span>
+      </div>
+
+      <div class="summary-total">
+        <span>Total TTC</span>
+        <span id="total">79€</span>
+      </div>
+
+      <ul class="trust-points">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>
+          Téléchargement immédiat après paiement
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>
+          Garantie 14 jours satisfait ou remboursé
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>
+          Validé par un vétérinaire accrédité
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>
+          Support email réactif
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+</main>
+
+<p class="legal">
+  En finalisant votre commande, vous acceptez nos <a href="legal.html#cgv">Conditions générales de vente</a> et notre <a href="legal.html#confidentialite">Politique de confidentialité</a>. Le pack PetReady est un outil d'organisation et ne remplace pas l'avis d'un vétérinaire accrédité.
+</p>
+
+<div style="height: 60px;"></div>
+
+<script>
+  // Plan data
+  const PLANS = {
+    standard: {
+      name: 'Standard',
+      price: 49,
+      includes: [
+        '1 destination au choix',
+        'PDF guide complet (60-80 pages)',
+        'Compteur de jours (Google Sheet)',
+        '10 modèles de courriers FR/EN',
+        'Base "compagnies aériennes"'
+      ],
+      // ⚠️ REMPLACE par ta vraie URL Stripe Payment Link
+      stripeUrl: 'https://buy.stripe.com/test_REMPLACE_STANDARD'
+    },
+    multi: {
+      name: 'Multi-destinations',
+      price: 79,
+      includes: [
+        'Toutes destinations',
+        'PDF guide complet (60-80 pages)',
+        'Compteur de jours (Google Sheet)',
+        '10 modèles de courriers FR/EN',
+        'Base "compagnies aériennes"',
+        'Annexe vétos accrédités',
+        '1 mise à jour à 6 mois'
+      ],
+      stripeUrl: 'https://buy.stripe.com/test_REMPLACE_MULTI'
+    },
+    premium: {
+      name: 'Premium',
+      price: 149,
+      includes: [
+        'Toutes destinations',
+        'PDF guide complet (60-80 pages)',
+        'Compteur de jours (Google Sheet)',
+        '10 modèles de courriers FR/EN',
+        'Base "compagnies aériennes"',
+        'Annexe vétos accrédités',
+        'Mises à jour À VIE',
+        'Accès Telegram d\'entraide'
+      ],
+      stripeUrl: 'https://buy.stripe.com/test_REMPLACE_PREMIUM'
+    }
+  };
+
+  function selectPlan(planKey) {
+    const plan = PLANS[planKey];
+    if (!plan) return;
+
+    // Update visual selection
+    document.querySelectorAll('.plan-option').forEach(opt => opt.classList.remove('selected'));
+    document.querySelector(`.plan-option[data-plan="${planKey}"]`).classList.add('selected');
+    document.querySelector(`input[name="plan"][value="${planKey}"]`).checked = true;
+
+    // Update summary
+    document.getElementById('plan-name').textContent = plan.name;
+    document.getElementById('total').textContent = plan.price + '€';
+    document.getElementById('pay-amount').textContent = plan.price + '€';
+    document.getElementById('subtotal-ht').textContent = (plan.price / 1.2).toFixed(2).replace('.', ',') + '€';
+    document.getElementById('vat').textContent = (plan.price - plan.price / 1.2).toFixed(2).replace('.', ',') + '€';
+
+    // Update includes
+    const ul = document.getElementById('includes-list');
+    ul.innerHTML = plan.includes.map(item => `<li>${item}</li>`).join('');
+
+    // Save selection
+    try { sessionStorage.setItem('petready-plan', planKey); } catch(e) {}
+  }
+
+  function goToPayment() {
+    const planKey = document.querySelector('input[name="plan"]:checked').value;
+    const email = document.getElementById('email').value;
+    const firstname = document.getElementById('firstname').value;
+
+    if (!email || !firstname) {
+      alert('Merci de renseigner votre email et votre prénom.');
+      return;
+    }
+
+    const plan = PLANS[planKey];
+
+    // Save email & plan for the success page
+    try {
+      sessionStorage.setItem('petready-email', email);
+      sessionStorage.setItem('petready-firstname', firstname);
+      sessionStorage.setItem('petready-plan-name', plan.name);
+    } catch(e) {}
+
+    // Build Stripe URL with prefilled email + metadata
+    const sep = plan.stripeUrl.includes('?') ? '&' : '?';
+    const url = `${plan.stripeUrl}${sep}prefilled_email=${encodeURIComponent(email)}&client_reference_id=${encodeURIComponent(firstname)}`;
+
+    // For demo (no real Stripe link yet), redirect to success page
+    if (plan.stripeUrl.includes('REMPLACE')) {
+      alert('⚠️ Démo : remplace plan.stripeUrl par ta vraie URL Stripe Payment Link dans le code de checkout.html. Redirection vers la page de succès pour test.');
+      window.location.href = `success.html?plan=${planKey}&email=${encodeURIComponent(email)}`;
+      return;
+    }
+
+    window.location.href = url;
+  }
+
+  // Bind plan selection
+  document.querySelectorAll('.plan-option').forEach(opt => {
+    opt.addEventListener('click', () => selectPlan(opt.dataset.plan));
+  });
+
+  // Read ?plan= URL param to preselect
+  const urlParams = new URLSearchParams(window.location.search);
+  const presetPlan = urlParams.get('plan');
+  if (presetPlan && PLANS[presetPlan]) {
+    selectPlan(presetPlan);
+  }
+</script>
+
+</body>
+</html>
