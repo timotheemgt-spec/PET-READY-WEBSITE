@@ -1,0 +1,37 @@
+<svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
+  <defs>
+    <linearGradient id="ogBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E2A47"/>
+      <stop offset="100%" stop-color="#1B3B5F"/>
+    </linearGradient>
+    <radialGradient id="ogGlow" cx="100%" cy="0%" r="80%">
+      <stop offset="0%" stop-color="#FF6B5B" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#FF6B5B" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="ogDots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="white" opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogBg)"/>
+  <rect width="1200" height="630" fill="url(#ogDots)"/>
+  <rect width="1200" height="630" fill="url(#ogGlow)"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#FF6B5B"/>
+  <g transform="translate(80, 100)">
+    <rect x="0" y="0" width="80" height="80" rx="20" fill="#FF6B5B"/>
+    <g fill="#F5EFE6" transform="translate(40, 40)">
+      <ellipse cx="0" cy="14" rx="14" ry="11"/>
+      <ellipse cx="0" cy="-14" rx="6" ry="8"/>
+      <ellipse cx="-17" cy="-7" rx="5.5" ry="7" transform="rotate(-25)"/>
+      <ellipse cx="17" cy="-7" rx="5.5" ry="7" transform="rotate(25)"/>
+      <ellipse cx="-23" cy="5" rx="4.5" ry="6" transform="rotate(-50)"/>
+      <ellipse cx="23" cy="5" rx="4.5" ry="6" transform="rotate(50)"/>
+    </g>
+    <text x="100" y="38" font-family="DM Serif Display, Georgia, serif" font-size="40" fill="white">PetReady</text>
+    <text x="100" y="68" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700" fill="#FF6B5B" letter-spacing="3">TRANQUILLITÉ VOYAGE POUR VOTRE ANIMAL</text>
+  </g>
+  <text x="80" y="280" font-family="DM Serif Display, Georgia, serif" font-size="60" fill="white">Pas de panique au comptoir.</text>
+  <text x="80" y="350" font-family="DM Serif Display, Georgia, serif" font-size="60" fill="white">Pas de quarantaine surprise.</text>
+  <text x="80" y="420" font-family="DM Serif Display, Georgia, serif" font-size="60" fill="#FF6B5B">Pas de vacances annulées.</text>
+  <text x="80" y="495" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#B8C5D6">79€ au lieu de 3 000€ chez un relocator. Validé véto · À jour 2026.</text>
+  <text x="1120" y="600" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700" fill="#B8C5D6" text-anchor="end" letter-spacing="2">PETREADY.FR</text>
+</svg>
