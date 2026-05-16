@@ -169,21 +169,41 @@
 </header>
 
 <main>
-  <div class="success-card">
+  <!-- État 1 : Vérification en cours -->
+  <div class="success-card" id="state-loading">
+    <div style="display:inline-block; width:48px; height:48px; border:4px solid var(--sand-deep, #ECE3D2); border-top-color: var(--coral); border-radius:50%; animation: spin 0.9s linear infinite; margin-bottom: 24px;"></div>
+    <h1 class="serif">Vérification de votre paiement…</h1>
+    <p class="lead">On confirme la transaction auprès de Stripe, ça prend 2-3 secondes.</p>
+    <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+  </div>
+
+  <!-- État 2 : Erreur (session_id manquant ou invalide) -->
+  <div class="success-card" id="state-error" style="display:none;">
+    <div class="check-circle" style="background:#FFEBEE; color:#D32F2F;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+    </div>
+    <h1 class="serif">Accès non autorisé</h1>
+    <p class="lead">Nous ne trouvons pas de paiement correspondant à cette page. Si vous venez d'acheter et que vous voyez ce message, écrivez-nous à <a href="mailto:hello@petready.com" style="color:var(--coral-deep); font-weight:600;">hello@petready.com</a> avec votre email de paiement, on vous renvoie l'accès sous 24h.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:24px;" id="error-detail"></p>
+    <a href="index.html" class="btn-download" style="margin-top:12px;">← Retour à l'accueil</a>
+  </div>
+
+  <!-- État 3 : Succès (le vrai hub) -->
+  <div class="success-card" id="state-success" style="display:none;">
     <div class="check-circle">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="4 12 10 18 20 6"/></svg>
     </div>
-    <h1 class="serif">Merci <span id="hello-name">Léa</span> !</h1>
-    <p class="lead">Votre commande est confirmée. Un email de confirmation avec votre facture vient de partir vers <strong id="hello-email">votre adresse</strong>.</p>
+    <h1 class="serif">Merci <span id="hello-name">vous</span> !</h1>
+    <p class="lead">Votre commande <strong id="plan-badge">PetReady</strong> est confirmée. Un email de confirmation avec votre facture vient de partir vers <strong id="hello-email">votre adresse</strong>.</p>
 
     <div class="download-block">
       <h2>📦 Votre pack est prêt</h2>
-      <p>Cliquez ci-dessous pour télécharger le PDF, le Google Sheet et l'ensemble des modèles.</p>
-      <a href="#" class="btn-download" id="download-link">
+      <p>Cliquez ci-dessous pour accéder au PDF, au Google Sheet et à l'ensemble des modèles.</p>
+      <a href="#" class="btn-download" id="download-link" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Télécharger mon pack PetReady
+        Accéder à mon pack PetReady
       </a>
-      <p style="font-size: 12px; margin-top: 14px; color: var(--muted);">Ce lien restera actif. Vous le recevez aussi par email.</p>
+      <p style="font-size: 12px; margin-top: 14px; color: var(--muted);">Conservez cette page ou l'email reçu — vous pouvez y revenir à tout moment via le lien dans l'email Stripe.</p>
     </div>
 
     <div class="next-steps">
@@ -211,13 +231,13 @@
     </div>
   </div>
 
-  <div class="secondary-card" style="background: linear-gradient(135deg, #1B3B5F 0%, #0E2A47 100%); color: white;">
+  <div class="secondary-card" id="extra-travelpass" style="background: linear-gradient(135deg, #1B3B5F 0%, #0E2A47 100%); color: white; display:none;">
     <h3 style="color: white;">✈️ Travel Pass arrive fin 2026</h3>
     <p style="color: #B8C5D6;">En tant que client Travel Plan, vous avez automatiquement <strong style="color: var(--coral);">-50% à vie</strong> sur l'abonnement Travel Pass au lancement. Profil animal sauvé, génération auto de documents, alertes par email — l'assistant illimité.</p>
     <p style="color: #B8C5D6; font-size: 13px; margin-top: 8px;">📨 On vous notifie au lancement, sans rien faire.</p>
   </div>
 
-  <div class="secondary-card">
+  <div class="secondary-card" id="extra-share" style="display:none;">
     <h3>🎁 Aidez-nous à aider d'autres voyageurs</h3>
     <p>Si le pack vous est utile, partagez-le. Tous les retours nous aident à améliorer le contenu.</p>
     <button class="btn-share" onclick="shareIt()">
@@ -233,29 +253,87 @@
 </main>
 
 <script>
-  // Personalize from sessionStorage (set on checkout page)
-  try {
-    const firstname = sessionStorage.getItem('petready-firstname');
-    const email = sessionStorage.getItem('petready-email');
-    if (firstname) document.getElementById('hello-name').textContent = firstname;
-    if (email) document.getElementById('hello-email').textContent = email;
-  } catch(e) {}
-
-  // Plan from URL param → for the right download link
-  // ⚠️ REMPLACE ces URLs par tes vrais liens de téléchargement (Google Drive, Dropbox, S3, etc.)
-  const DOWNLOADS = {
-    standard: 'https://drive.google.com/uc?export=download&id=REMPLACE_STANDARD',
-    multi: 'https://drive.google.com/uc?export=download&id=REMPLACE_MULTI',
-    premium: 'https://drive.google.com/uc?export=download&id=REMPLACE_PREMIUM'
+  const PLAN_LABELS = {
+    standard: 'Standard',
+    multi:    'Multi-destinations',
+    premium:  'Premium',
   };
-  const urlParams = new URLSearchParams(window.location.search);
-  const plan = urlParams.get('plan') || 'multi';
-  const downloadLink = document.getElementById('download-link');
-  if (DOWNLOADS[plan]) {
-    downloadLink.href = DOWNLOADS[plan];
+
+  function showState(name) {
+    ['loading', 'error', 'success'].forEach(s => {
+      const el = document.getElementById('state-' + s);
+      if (el) el.style.display = (s === name) ? '' : 'none';
+    });
+    if (name === 'success') {
+      const tp = document.getElementById('extra-travelpass');
+      const sh = document.getElementById('extra-share');
+      if (tp) tp.style.display = '';
+      if (sh) sh.style.display = '';
+    }
   }
 
-  // Share function
+  function showError(reason) {
+    showState('error');
+    const detail = document.getElementById('error-detail');
+    if (detail && reason) detail.textContent = 'Code : ' + reason;
+  }
+
+  async function verifyPayment() {
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id');
+
+    if (!sessionId || !sessionId.startsWith('cs_')) {
+      showError('missing_session_id');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/verify-payment?session_id=' + encodeURIComponent(sessionId));
+      const data = await res.json();
+
+      if (!res.ok || !data.verified) {
+        showError(data.reason || ('http_' + res.status));
+        return;
+      }
+
+      // Personnalisation
+      const firstname = data.firstname ? data.firstname.split(' ')[0] : (sessionStorage.getItem('petready-firstname') || 'vous');
+      const email = data.email || sessionStorage.getItem('petready-email') || 'votre adresse';
+      document.getElementById('hello-name').textContent = firstname;
+      document.getElementById('hello-email').textContent = email;
+      document.getElementById('plan-badge').textContent = 'PetReady ' + (PLAN_LABELS[data.plan] || '');
+
+      // Lien de téléchargement
+      const dl = document.getElementById('download-link');
+      if (data.download_url) {
+        dl.href = data.download_url;
+      } else {
+        dl.removeAttribute('href');
+        dl.style.opacity = '0.5';
+        dl.style.cursor = 'not-allowed';
+        dl.textContent = 'Lien indisponible — contactez hello@petready.com';
+      }
+
+      showState('success');
+
+      // Tracking conversion (Google Ads / Analytics)
+      try {
+        if (typeof gtag === 'function') {
+          gtag('event', 'purchase', {
+            transaction_id: sessionId,
+            value: (data.amount_total || 0) / 100,
+            currency: (data.currency || 'eur').toUpperCase(),
+            items: [{ item_id: data.plan, item_name: 'PetReady ' + (PLAN_LABELS[data.plan] || '') }],
+          });
+        }
+      } catch (e) {}
+    } catch (err) {
+      console.error(err);
+      showError('network_error');
+    }
+  }
+
+  // Share function (utilisée par le bouton "Partager")
   function shareIt() {
     const url = 'https://petready.com';
     const text = "Je viens d'acheter PetReady — le pack qui m'évite l'enfer administratif pour voyager avec mon animal. Je le recommande 🐾";
@@ -266,6 +344,9 @@
       alert('Lien copié dans le presse-papier !');
     }
   }
+
+  // Démarrer la vérification au chargement
+  verifyPayment();
 </script>
 
 </body>

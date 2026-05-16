@@ -1,0 +1,9 @@
+{
+  "name": "petready",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PetReady — Site statique + fonction serverless de vérification de paiement",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  }
+}
