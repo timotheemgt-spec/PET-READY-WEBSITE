@@ -1352,7 +1352,7 @@
       <div>
         <!-- Passeport animal SVG -->
         <div style="margin-bottom: 24px; display: flex; justify-content: center;">
-          <svg viewBox="0 0 540 720" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: 480px; height: auto; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.4));">
+          <svg viewBox="0 0 540 744" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: 480px; height: auto; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.4));">
             <defs>
               <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#FCFAF5"/>
@@ -1378,9 +1378,9 @@
             </defs>
 
             <!-- Card body -->
-            <rect x="2" y="2" width="536" height="716" rx="24" fill="url(#cardBg)"/>
-            <rect x="2" y="2" width="536" height="716" rx="24" fill="url(#guilloche)"/>
-            <rect x="2.5" y="2.5" width="535" height="715" rx="23.5" fill="none" stroke="#D8CFBC" stroke-width="1"/>
+            <rect x="2" y="2" width="536" height="740" rx="24" fill="url(#cardBg)"/>
+            <rect x="2" y="2" width="536" height="740" rx="24" fill="url(#guilloche)"/>
+            <rect x="2.5" y="2.5" width="535" height="739" rx="23.5" fill="none" stroke="#D8CFBC" stroke-width="1"/>
 
             <!-- ============ TOP HEADER ============ -->
             <path d="M22 2 L518 2 Q538 2 538 22 L538 158 L2 158 L2 22 Q2 2 22 2 Z" fill="url(#navyHead)"/>
@@ -1435,10 +1435,10 @@
 
               <!-- Verified seal (outline style) -->
               <g transform="translate(0, 112)">
-                <rect width="134" height="22" rx="3" fill="rgba(52,168,83,0.06)" stroke="#34A853" stroke-width="0.6"/>
-                <circle cx="14" cy="11" r="5" fill="#34A853"/>
-                <path d="M11 11 L13 13 L17 9" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <text x="24" y="14.5" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#1E7A38" letter-spacing="1.8">PROFIL AUTHENTIFIÉ</text>
+                <rect width="118" height="24" rx="3" fill="rgba(52,168,83,0.06)" stroke="#34A853" stroke-width="0.6"/>
+                <circle cx="14" cy="12" r="5" fill="#34A853"/>
+                <path d="M11 12 L13 14 L17 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <text x="26" y="15.5" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#1E7A38" letter-spacing="1">PROFIL VÉRIFIÉ</text>
               </g>
             </g>
 
@@ -1522,11 +1522,14 @@
               </g>
             </g>
 
-            <!-- ============ MRZ FOOTER (biometric passport style) ============ -->
-            <g transform="translate(36, 700)">
-              <text x="0" y="0" font-family="Courier New, monospace" font-size="9" fill="#0E2A47" letter-spacing="2.5">P‹‹FR‹‹PETREADY‹‹TOMATO‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹0</text>
-              <text x="468" y="0" font-family="Inter, sans-serif" font-size="8" font-weight="600" fill="#FF6B5B" text-anchor="end" letter-spacing="1.5">v1.0 · petready.fr</text>
+            <!-- ============ MRZ FOOTER (biometric passport style — 2 lines) ============ -->
+            <line x1="36" y1="694" x2="504" y2="694" stroke="#E5DAC1" stroke-width="0.5"/>
+            <g transform="translate(36, 712)" font-family="Courier New, monospace" fill="#0E2A47">
+              <text x="0" y="0" font-size="8.5" letter-spacing="1.4">P&lt;FRA&lt;PETREADY&lt;&lt;TOMATO&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</text>
+              <text x="0" y="14" font-size="8.5" letter-spacing="1.4">PR20260714FRA0CDG&lt;&lt;USA&lt;JFK&lt;AF24&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;0</text>
             </g>
+            <line x1="36" y1="734" x2="100" y2="734" stroke="#FF6B5B" stroke-width="0.8" opacity="0.6"/>
+            <text x="504" y="738" font-family="Inter, sans-serif" font-size="8" font-weight="600" fill="#FF6B5B" text-anchor="end" letter-spacing="1.5">v1.0 · petready.fr</text>
           </svg>
         </div>
 
