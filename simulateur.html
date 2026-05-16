@@ -918,13 +918,18 @@
 
   // ============== STEP 1: Animal ==============
   document.querySelectorAll('[data-animal]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const clickedBtn = e.target.closest('[data-animal]');
-      if (!clickedBtn) return;
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Remove selected from all
       document.querySelectorAll('[data-animal]').forEach(b => b.classList.remove('selected'));
-      clickedBtn.classList.add('selected');
-      state.animal = clickedBtn.dataset.animal;
-      document.getElementById('btn-next-1').disabled = false;
+      // Add selected to clicked
+      this.classList.add('selected');
+      state.animal = this.dataset.animal;
+      // Enable button
+      const nextBtn = document.getElementById('btn-next-1');
+      if (nextBtn) nextBtn.disabled = false;
+      console.log('Selected animal:', state.animal);
     });
   });
   document.getElementById('btn-next-1').addEventListener('click', () => {
