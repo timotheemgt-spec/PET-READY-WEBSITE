@@ -384,7 +384,7 @@
         'Base "compagnies aériennes"'
       ],
       // ⚠️ REMPLACE par ta vraie URL Stripe Payment Link
-      stripeUrl: 'https://buy.stripe.com/test_REMPLACE_STANDARD'
+      stripeUrl: 'https://buy.stripe.com/bJe6oHepw8fnbCndC9abK01'
     },
     multi: {
       name: 'Multi-destinations',
@@ -398,7 +398,7 @@
         'Annexe vétos accrédités',
         '1 mise à jour à 6 mois'
       ],
-      stripeUrl: 'https://buy.stripe.com/test_REMPLACE_MULTI'
+      stripeUrl: 'https://buy.stripe.com/bJecN5gxEdzH0XJcy5abK02'
     },
     premium: {
       name: 'Premium',
@@ -413,7 +413,7 @@
         'Mises à jour À VIE',
         'Accès Telegram d\'entraide'
       ],
-      stripeUrl: 'https://buy.stripe.com/test_REMPLACE_PREMIUM'
+      stripeUrl: 'https://buy.stripe.com/dRm28r1CK2V37m755DabK00'
     }
   };
 
@@ -465,11 +465,7 @@
     const url = `${plan.stripeUrl}${sep}prefilled_email=${encodeURIComponent(email)}&client_reference_id=${encodeURIComponent(firstname)}`;
 
     // For demo (no real Stripe link yet), redirect to success page
-    if (plan.stripeUrl.includes('REMPLACE')) {
-      alert('⚠️ Démo : remplace plan.stripeUrl par ta vraie URL Stripe Payment Link dans le code de checkout.html. Redirection vers la page de succès pour test.');
-      window.location.href = `success.html?plan=${planKey}&email=${encodeURIComponent(email)}`;
-      return;
-    }
+    // URLs Stripe actives
 
     window.location.href = url;
   }
