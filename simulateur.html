@@ -776,17 +776,17 @@
         minAgeEn: (animal) => `${animal === 'dog' ? 'Le chien' : 'Le chat'} doit avoir cet âge minimum à la date du voyage. Sinon, refus à la frontière sans appel.`,
         minAgeFr: (animal) => `${animal === 'dog' ? '6 mois (règle USA août 2024)' : '15 semaines (12 sem. vaccin + 21j attente)'}`,
         seroDep: 'Test sérologique antirabique (retour depuis pays non listé)',
-        seroDepDesc: '⚠️ Test à faire au minimum 3 MOIS avant le voyage retour. C'est l'erreur n°1 des familles qui partent en vacances au Maroc.',
+        seroDepDesc: `⚠️ Test à faire au minimum 3 MOIS avant le voyage retour. C'est l'erreur n°1 des familles qui partent en vacances au Maroc.`,
         seroArr: 'Test sérologique pour le retour (à anticiper)',
         seroArrDesc: (dep, arr) => `Pour rentrer ${dep === 'France' ? "en France" : 'dans votre pays'} depuis ${arr}, vous devrez avoir fait un test sérologique au moins 3 mois avant le retour. À planifier MAINTENANT.`,
         passportTitle: 'Passeport européen pour animal',
-        passportDesc: 'Délivré par tout vétérinaire habilité (30-50€). Si vous résidez dans l'UE et restez dans l'UE, c'est le seul document principal nécessaire.',
+        passportDesc: `Délivré par tout vétérinaire habilité (30-50€). Si vous résidez dans l'UE et restez dans l'UE, c'est le seul document principal nécessaire.`,
         certTitle: (country) => `Certificat sanitaire pour ${country}`,
         certDesc: (arr) => `À émettre dans les 10 jours avant le départ par un vétérinaire ${arr.usa ? 'USDA-accredited' : arr.ahcUK ? 'Official Vet UK' : 'accrédité'}. Coût : 100-200€.`,
         usdaTitle: 'Endossement USDA (CRITIQUE)',
-        usdaDesc: 'Le certificat vétérinaire DOIT être endossé par l'USDA APHIS via VEHCS sous 10 jours. Sans endossement = refus à l'embarquement. Coût : ~38$.',
+        usdaDesc: `Le certificat vétérinaire DOIT être endossé par l'USDA APHIS via VEHCS sous 10 jours. Sans endossement = refus à l'embarquement. Coût : ~38$.`,
         cdcTitle: 'CDC Dog Import Form (depuis août 2024)',
-        cdcDesc: 'Formulaire en ligne CDC à remplir 2-10 jours avant l'arrivée. Présentation obligatoire au comptoir d'enregistrement.',
+        cdcDesc: `Formulaire en ligne CDC à remplir 2-10 jours avant l'arrivée. Présentation obligatoire au comptoir d'enregistrement.`,
         ahcTitle: 'Animal Health Certificate (règle avril 2026)',
         ahcDesc: 'Depuis le 22 avril 2026, chaque trajet UK ↔ UE exige un AHC neuf (valide 10 jours). Plus jamais de passeport européen UK. Coût : £150-200.',
         vermTitle: 'Vermifuge échinocoque obligatoire',
@@ -794,9 +794,9 @@
         breedTitle: (arr) => `Vérifier restrictions de race (${arr})`,
         breedDesc: (arr, animal) => `${arr} interdit certaines races (Pit Bull, Staffordshire, Dogo Argentino, etc.). Vérifiez avant de réserver — sinon ${animal === 'dog' ? 'le chien' : "l'animal"} refusé à la frontière.`,
         flightTitle: 'Réserver le vol + place animal',
-        flightDesc: 'Les compagnies aériennes limitent le nombre d'animaux par vol. Confirmer cabine/soute selon le poids. Achetez une cage IATA homologuée si soute.',
-        cageTitle: 'Habituer l'animal à sa cage',
-        cageDesc: 'Au moins 30 jours d'adaptation. Ouvrez-la à la maison, mettez des friandises dedans, fermez-la progressivement.',
+        flightDesc: `Les compagnies aériennes limitent le nombre d'animaux par vol. Confirmer cabine/soute selon le poids. Achetez une cage IATA homologuée si soute.`,
+        cageTitle: `Habituer l'animal à sa cage`,
+        cageDesc: `Au moins 30 jours d'adaptation. Ouvrez-la à la maison, mettez des friandises dedans, fermez-la progressivement.`,
         boardingTitle: 'Embarquement',
         boardingDesc: 'Arriver 3 heures avant un vol international. Documents à portée. Trousse voyage : eau, gamelle, jouet familier, sac à crottes.',
       }
@@ -987,7 +987,170 @@
     const dep = COUNTRIES[state.dep];
     const arr = COUNTRIES[state.arr];
     const animal = state.animal;
+    const lang = document.documentElement.getAttribute('data-lang') || 'fr';
+    const T = TRANSLATIONS[lang];
+    const animalEmoji = animal === 'dog' ? '🐶' : '🐱';
 
+    // ===== Compute requirements based on route =====
+    const requirements = [];
+
+    // 1. Microchip + rabies vaccine (always required)
+    requirements.push({
+      kind: 'urgent',
+      deadline: 'J-90',
+      title: T.req.chipTitle,
+      desc: T.req.chipDesc
+    });
+
+    // 2. Minimum age check
+    requirements.push({
+      kind: 'urgent',
+      deadline: 'J-90',
+      title: T.req.minAgeTitle(T.req.minAgeFr(animal)),
+      desc: T.req.minAgeEn(animal)
+    });
+
+    // 3. Serology test if going to non-listed country (e.g. Maroc) OR returning from there
+    if (arr.nonListed) {
+      requirements.push({
+        kind: 'urgent',
+        deadline: 'J-90',
+        title: T.req.seroArr,
+        desc: T.req.seroArrDesc(dep.label, arr.label)
+      });
+    }
+    if (dep.nonListed) {
+      requirements.push({
+        kind: 'urgent',
+        deadline: 'J-90',
+        title: T.req.seroDep,
+        desc: T.req.seroDepDesc
+      });
+    }
+
+    // 4. EU passport (if both EU/EU-like)
+    if ((dep.ue || dep.ueLike) && (arr.ue || arr.ueLike)) {
+      requirements.push({
+        kind: 'warning',
+        deadline: 'J-30',
+        title: T.req.passportTitle,
+        desc: T.req.passportDesc
+      });
+    }
+
+    // 5. Health certificate (non-EU destinations)
+    if (!arr.ue && !arr.ueLike) {
+      requirements.push({
+        kind: 'warning',
+        deadline: 'J-10',
+        title: T.req.certTitle(arr.label),
+        desc: T.req.certDesc(arr)
+      });
+    }
+
+    // 6. USDA endorsement (USA)
+    if (arr.usda) {
+      requirements.push({
+        kind: 'urgent',
+        deadline: 'J-10',
+        title: T.req.usdaTitle,
+        desc: T.req.usdaDesc
+      });
+    }
+
+    // 7. CDC form (USA + dog)
+    if (arr.cdc && animal === 'dog') {
+      requirements.push({
+        kind: 'warning',
+        deadline: 'J-2',
+        title: T.req.cdcTitle,
+        desc: T.req.cdcDesc
+      });
+    }
+
+    // 8. AHC (UK)
+    if (arr.ahcUK) {
+      requirements.push({
+        kind: 'urgent',
+        deadline: 'J-10',
+        title: T.req.ahcTitle,
+        desc: T.req.ahcDesc
+      });
+    }
+
+    // 9. Echinococcus deworming
+    if (arr.vermifuge) {
+      requirements.push({
+        kind: 'warning',
+        deadline: 'J-3',
+        title: T.req.vermTitle,
+        desc: T.req.vermDesc(arr.label)
+      });
+    }
+
+    // 10. Breed restrictions
+    if (arr.breedRestrictions && animal === 'dog') {
+      requirements.push({
+        kind: 'warning',
+        deadline: 'J-30',
+        title: T.req.breedTitle(arr.label),
+        desc: T.req.breedDesc(arr.label, animal)
+      });
+    }
+
+    // 11. Flight booking
+    requirements.push({
+      kind: 'info',
+      deadline: 'J-60',
+      title: T.req.flightTitle,
+      desc: T.req.flightDesc
+    });
+
+    // 12. Crate training
+    requirements.push({
+      kind: 'info',
+      deadline: 'J-30',
+      title: T.req.cageTitle,
+      desc: T.req.cageDesc
+    });
+
+    // 13. Boarding
+    requirements.push({
+      kind: 'info',
+      deadline: 'J-0',
+      title: T.req.boardingTitle,
+      desc: T.req.boardingDesc
+    });
+
+    // ===== Compute stats =====
+    const steps = requirements.length;
+    let minDays = 30;
+    let cost = 80; // base: chip + vaccine
+    let difficultyKey = 'easy';
+
+    if ((dep.ue || dep.ueLike) && (arr.ue || arr.ueLike)) {
+      minDays = 30; cost = 80; difficultyKey = 'easy';
+    }
+    if (!arr.ue && !arr.ueLike) { minDays = 60; cost = 200; difficultyKey = 'medium'; }
+    if (arr.usda) { minDays = 90; cost = 350; difficultyKey = 'hard'; }
+    if (arr.ahcUK) { minDays = 60; cost = 280; difficultyKey = 'medium'; }
+    if (arr.nonListed || dep.nonListed) { minDays = 120; cost = 320; difficultyKey = 'hard'; }
+
+    document.getElementById('stat-steps').textContent = steps;
+    document.getElementById('stat-time').textContent = minDays + (lang === 'fr' ? 'j' : 'd');
+    document.getElementById('stat-cost').textContent = cost + '€';
+    document.getElementById('stat-difficulty').textContent = T.difficulty[difficultyKey];
+
+    // ===== Header title / route =====
+    document.getElementById('result-title').textContent = T.resultTitle(animal);
+    document.getElementById('result-tagline').textContent = T.resultTagline;
+    document.getElementById('route-display').innerHTML = `
+      <span class="route-item"><span class="flag">${dep.flag}</span>${dep.label}</span>
+      <span class="route-arrow">→</span>
+      <span class="route-item"><span class="flag">${arr.flag}</span>${arr.label}</span>
+      <span class="route-arrow">·</span>
+      <span class="route-item">${T.withAnimal(animalEmoji, animal)}</span>
+    `;
 
     // Timeline — show first 4, blur next 3
     const VISIBLE = 4;
