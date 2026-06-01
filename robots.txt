@@ -16,4 +16,4 @@ Disallow: /admin/
 # Disallow: /
 
 # Sitemap
-Sitemap: https://petready.com/sitemap.xml
+Sitemap: https://petready.fr/sitemap.xml

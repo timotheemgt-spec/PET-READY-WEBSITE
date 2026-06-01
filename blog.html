@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articles PetReady — Conseils voyage avec son animal</title>
+<meta name="description" content="Guides et conseils pour préparer le voyage administratif de votre chien ou chat à l'étranger : passeport, vaccins, formalités par pays. À jour 2026.">
+<link rel="canonical" href="https://petready.fr/blog.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="petready_logo_mark.svg">
+<link rel="apple-touch-icon" href="petready_logo_mark.svg">
+<meta name="theme-color" content="#0E2A47">
+<style>
+  :root {
+    --navy: #0E2A47;
+    --navy-soft: #1B3B5F;
+    --sand: #F5EFE6;
+    --sand-deep: #ECE3D2;
+    --coral: #FF6B5B;
+    --coral-deep: #E8554A;
+    --ink: #0E2A47;
+    --muted: #6B7A8F;
+    --line: #E2D9C8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--sand);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245, 239, 230, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; max-width: 1180px; margin: 0 auto; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; letter-spacing: -0.5px; color: var(--navy); }
+  .nav-logo .ready { color: var(--coral); }
+  .nav-logo svg { width: 34px; height: 34px; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { font-size: 13px; color: var(--muted); font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { background: var(--coral); color: white !important; padding: 10px 20px; border-radius: 999px; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+  .nav-cta:hover { background: var(--coral-deep); transform: translateY(-1px); }
+
+  .blog-hero { padding: 80px 0 48px; text-align: center; }
+  .blog-hero .eyebrow {
+    display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--coral); margin-bottom: 18px;
+  }
+  .blog-hero h1 { font-size: 52px; line-height: 1.05; letter-spacing: -1px; margin-bottom: 18px; }
+  .blog-hero p { font-size: 18px; color: var(--navy-soft); max-width: 600px; margin: 0 auto; }
+
+  .articles-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 28px; padding-bottom: 90px;
+  }
+  .article-card {
+    background: white; border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column;
+  }
+  .article-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(14,42,71,0.10); }
+  .article-card .thumb {
+    height: 170px; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+    display: flex; align-items: center; justify-content: center; position: relative;
+  }
+  .article-card .thumb .badge-new {
+    position: absolute; top: 14px; left: 14px; background: var(--coral); color: white;
+    font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 999px;
+  }
+  .article-card .thumb svg { width: 70px; height: 70px; opacity: 0.92; }
+  .article-card .card-body { padding: 22px 24px 26px; flex: 1; display: flex; flex-direction: column; }
+  .article-card .cat { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--coral); margin-bottom: 10px; }
+  .article-card h2 { font-size: 21px; line-height: 1.25; letter-spacing: -0.3px; margin-bottom: 10px; }
+  .article-card p { font-size: 14px; color: var(--muted); margin-bottom: 18px; flex: 1; }
+  .article-card .meta { font-size: 12px; color: var(--muted); display: flex; gap: 12px; align-items: center; }
+  .article-card .read-more { color: var(--coral); font-weight: 600; font-size: 13px; margin-top: 16px; }
+
+  .empty-soon {
+    grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--muted);
+    border: 1px dashed var(--line); border-radius: 16px; font-size: 15px;
+  }
+
+  footer { background: var(--navy); color: rgba(245,239,230,0.7); padding: 40px 0; font-size: 13px; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  footer a { color: rgba(245,239,230,0.7); transition: color 0.2s; }
+  footer a:hover { color: white; }
+  footer .footer-links { display: flex; gap: 22px; }
+
+  @media (max-width: 640px) {
+    .blog-hero h1 { font-size: 36px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="120" height="120" rx="28" fill="#0E2A47"/>
+        <g fill="#F5EFE6">
+          <ellipse cx="60" cy="78" rx="22" ry="18"/>
+          <ellipse cx="60" cy="36" rx="9" ry="12"/>
+          <ellipse cx="34" cy="46" rx="8.5" ry="11" transform="rotate(-25 34 46)"/>
+          <ellipse cx="86" cy="46" rx="8.5" ry="11" transform="rotate(25 86 46)"/>
+          <ellipse cx="22" cy="68" rx="7.5" ry="9.5" transform="rotate(-50 22 68)"/>
+          <ellipse cx="98" cy="68" rx="7.5" ry="9.5" transform="rotate(50 98 68)"/>
+        </g>
+        <path d="M48 78 L57 87 L74 70" fill="none" stroke="#FF6B5B" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span><span class="pet">Pet</span><span class="ready">Ready</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="simulateur.html">Diagnostic gratuit</a>
+      <a href="index.html#product">Le pack</a>
+      <a href="index.html#pricing">Tarifs</a>
+      <a href="blog.html" style="color: var(--ink); font-weight: 700;">Articles</a>
+      <a href="index.html#pricing" class="nav-cta">Acheter</a>
+    </div>
+  </div>
+</nav>
+
+<header class="blog-hero">
+  <div class="container">
+    <span class="eyebrow">Les Articles PetReady</span>
+    <h1 class="serif">Voyager avec son animal,<br>sans mauvaise surprise</h1>
+    <p>Guides pratiques, formalités par pays et conseils pour préparer sereinement le voyage administratif de votre chien ou chat. À jour de la réglementation 2026.</p>
+  </div>
+</header>
+
+<main class="container">
+  <div class="articles-grid">
+
+    <a href="blog-voyager-chien-suisse-2026.html" class="article-card">
+      <div class="thumb">
+        <span class="badge-new">Nouveau</span>
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <rect x="22" y="22" width="76" height="76" rx="10" fill="#FF6B5B"/>
+          <rect x="54" y="38" width="12" height="44" fill="#F5EFE6"/>
+          <rect x="38" y="54" width="44" height="12" fill="#F5EFE6"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="cat">Destinations</div>
+        <h2 class="serif">Voyager avec son chien en Suisse : la check-list 2026</h2>
+        <p>Puce, vaccin rage, douane, races interdites par canton : tout ce qu'il faut pour passer la frontière suisse en règle.</p>
+        <div class="meta">
+          <span>📅 Juin 2026</span>
+          <span>·</span>
+          <span>⏱️ 8 min de lecture</span>
+        </div>
+        <span class="read-more">Lire l'article →</span>
+      </div>
+    </a>
+
+    <a href="blog-voyager-usa-chien-2026.html" class="article-card">
+      <div class="thumb">
+        <span class="badge-new">Nouveau</span>
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <rect x="22" y="34" width="76" height="52" rx="6" fill="#F5EFE6"/>
+          <rect x="22" y="34" width="76" height="9" fill="#FF6B5B"/>
+          <rect x="22" y="52" width="76" height="9" fill="#FF6B5B"/>
+          <rect x="22" y="70" width="76" height="9" fill="#FF6B5B"/>
+          <rect x="22" y="34" width="32" height="27" fill="#0E2A47"/>
+          <circle cx="32" cy="42" r="1.6" fill="#F5EFE6"/>
+          <circle cx="42" cy="42" r="1.6" fill="#F5EFE6"/>
+          <circle cx="37" cy="50" r="1.6" fill="#F5EFE6"/>
+          <circle cx="32" cy="56" r="1.6" fill="#F5EFE6"/>
+          <circle cx="42" cy="56" r="1.6" fill="#F5EFE6"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="cat">Destinations</div>
+        <h2 class="serif">Voyager aux USA avec son chien : guide CDC 2026</h2>
+        <p>CDC Dog Import Form, vaccin rage en anglais, âge minimum 6 mois : la procédure exacte pour entrer aux États-Unis.</p>
+        <div class="meta">
+          <span>📅 Juin 2026</span>
+          <span>·</span>
+          <span>⏱️ 8 min de lecture</span>
+        </div>
+        <span class="read-more">Lire l'article →</span>
+      </div>
+    </a>
+
+    <a href="blog-voyager-royaume-uni-chien-2026.html" class="article-card">
+      <div class="thumb">
+        <span class="badge-new">Nouveau</span>
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <rect x="22" y="32" width="76" height="56" rx="6" fill="#0E2A47"/>
+          <path d="M22 32 L98 88 M98 32 L22 88" stroke="#F5EFE6" stroke-width="6"/>
+          <path d="M60 32 L60 88 M22 60 L98 60" stroke="#F5EFE6" stroke-width="10"/>
+          <path d="M60 32 L60 88 M22 60 L98 60" stroke="#FF6B5B" stroke-width="5"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="cat">Destinations</div>
+        <h2 class="serif">Voyager au Royaume-Uni avec son chien post-Brexit</h2>
+        <p>Tunnel, ferry, vermifuge échinocoque entre 24 et 120 heures : la procédure exacte pour passer la Manche.</p>
+        <div class="meta">
+          <span>📅 Juin 2026</span>
+          <span>·</span>
+          <span>⏱️ 7 min de lecture</span>
+        </div>
+        <span class="read-more">Lire l'article →</span>
+      </div>
+    </a>
+
+    <a href="blog-vaccin-rage-chien-voyage.html" class="article-card">
+      <div class="thumb">
+        <span class="badge-new">Nouveau</span>
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <rect x="28" y="50" width="50" height="20" rx="3" fill="#F5EFE6" transform="rotate(-30 53 60)"/>
+          <rect x="68" y="42" width="20" height="36" rx="2" fill="#FF6B5B" transform="rotate(-30 78 60)"/>
+          <line x1="20" y1="80" x2="40" y2="68" stroke="#F5EFE6" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="92" cy="38" r="4" fill="#F5EFE6"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="cat">Réglementation</div>
+        <h2 class="serif">Vaccin rage chien : délais avant un voyage</h2>
+        <p>21 jours, primovaccination, rappel, titrage sérologique : tous les délais à respecter sans erreur.</p>
+        <div class="meta">
+          <span>📅 Juin 2026</span>
+          <span>·</span>
+          <span>⏱️ 7 min de lecture</span>
+        </div>
+        <span class="read-more">Lire l'article →</span>
+      </div>
+    </a>
+
+    <a href="blog-cout-voyage-chien-etranger-2026.html" class="article-card">
+      <div class="thumb">
+        <span class="badge-new">Nouveau</span>
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="32" fill="#FF6B5B"/>
+          <text x="60" y="74" font-family="DM Serif Display, Georgia, serif" font-size="38" fill="#F5EFE6" text-anchor="middle">€</text>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="cat">Budget</div>
+        <h2 class="serif">Coût voyage chien étranger : budget réel 2026</h2>
+        <p>Vaccins, passeport, billet, caisse IATA, hôtel pet-friendly : le budget réel destination par destination.</p>
+        <div class="meta">
+          <span>📅 Juin 2026</span>
+          <span>·</span>
+          <span>⏱️ 8 min de lecture</span>
+        </div>
+        <span class="read-more">Lire l'article →</span>
+      </div>
+    </a>
+
+    <a href="blog-voyager-chat-etranger-checklist.html" class="article-card">
+      <div class="thumb">
+        <span class="badge-new">Nouveau</span>
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="76" rx="24" ry="20" fill="#F5EFE6"/>
+          <ellipse cx="60" cy="44" rx="18" ry="15" fill="#F5EFE6"/>
+          <polygon points="44,32 48,46 38,46" fill="#F5EFE6"/>
+          <polygon points="76,32 72,46 82,46" fill="#F5EFE6"/>
+          <circle cx="54" cy="44" r="2" fill="#0E2A47"/>
+          <circle cx="66" cy="44" r="2" fill="#0E2A47"/>
+          <path d="M58 50 Q60 53 62 50" fill="none" stroke="#0E2A47" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M84 86 Q96 84 96 70" fill="none" stroke="#F5EFE6" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="cat">Chats</div>
+        <h2 class="serif">Voyager avec son chat à l'étranger : check-list</h2>
+        <p>Passeport, caisse IATA, protocole anti-stress : la check-list complète pour voyager sereinement avec un chat.</p>
+        <div class="meta">
+          <span>📅 Juin 2026</span>
+          <span>·</span>
+          <span>⏱️ 8 min de lecture</span>
+        </div>
+        <span class="read-more">Lire l'article →</span>
+      </div>
+    </a>
+
+    <a href="blog-demenager-etranger-animal-timeline.html" class="article-card">
+      <div class="thumb">
+        <span class="badge-new">Nouveau</span>
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <rect x="26" y="42" width="68" height="52" rx="4" fill="#F5EFE6"/>
+          <rect x="26" y="42" width="68" height="16" fill="#FF6B5B"/>
+          <rect x="56" y="30" width="8" height="20" fill="#0E2A47"/>
+          <path d="M26 58 L94 58" stroke="#0E2A47" stroke-width="1.5"/>
+          <line x1="42" y1="68" x2="78" y2="68" stroke="#9CA8B9" stroke-width="2"/>
+          <line x1="42" y1="78" x2="68" y2="78" stroke="#9CA8B9" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="cat">Expatriation</div>
+        <h2 class="serif">Déménager à l'étranger avec un animal : timeline mois par mois</h2>
+        <p>De J-6 mois à J-0 : le calendrier complet pour un déménagement international réussi avec son chien ou chat.</p>
+        <div class="meta">
+          <span>📅 Juin 2026</span>
+          <span>·</span>
+          <span>⏱️ 8 min de lecture</span>
+        </div>
+        <span class="read-more">Lire l'article →</span>
+      </div>
+    </a>
+
+    <a href="blog-voyager-canada-chien-2026.html" class="article-card">
+      <div class="thumb">
+        <span class="badge-new">Nouveau</span>
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <path d="M60 28 L66 44 L80 38 L74 52 L88 54 L78 64 L88 72 L72 72 L74 86 L60 78 L46 86 L48 72 L32 72 L42 64 L32 54 L46 52 L40 38 L54 44 Z" fill="#FF6B5B"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="cat">Destinations</div>
+        <h2 class="serif">Voyager au Canada / Québec avec son chien</h2>
+        <p>Certificat rage en anglais ou français, puce, CFIA : les formalités exactes pour entrer au Canada.</p>
+        <div class="meta">
+          <span>📅 Juin 2026</span>
+          <span>·</span>
+          <span>⏱️ 7 min de lecture</span>
+        </div>
+        <span class="read-more">Lire l'article →</span>
+      </div>
+    </a>
+
+    <a href="blog-passeport-europeen-2026.html" class="article-card">
+      <div class="thumb">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <rect x="22" y="14" width="76" height="92" rx="8" fill="#F5EFE6"/>
+          <rect x="22" y="14" width="76" height="22" rx="8" fill="#FF6B5B"/>
+          <rect x="22" y="30" width="76" height="6" fill="#FF6B5B"/>
+          <circle cx="60" cy="62" r="16" fill="none" stroke="#0E2A47" stroke-width="3"/>
+          <path d="M53 62 L58 67 L68 56" fill="none" stroke="#0E2A47" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="36" y="86" width="48" height="4" rx="2" fill="#9CA8B9"/>
+          <rect x="44" y="94" width="32" height="4" rx="2" fill="#C7CFDA"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="cat">Réglementation</div>
+        <h2 class="serif">Passeport européen 2026 : ce que change la règle du 22 avril</h2>
+        <p>Depuis le 22 avril 2026, le passeport européen unique est obligatoire pour voyager avec son chien, chat ou furet.</p>
+        <div class="meta">
+          <span>📅 Avril 2026</span>
+          <span>·</span>
+          <span>⏱️ 7 min de lecture</span>
+        </div>
+        <span class="read-more">Lire l'article →</span>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>© 2026 PetReady — Voyagez sereinement.</div>
+      <div class="footer-links">
+        <a href="legal.html#mentions-legales">Mentions légales</a>
+        <a href="legal.html#cgv">CGV</a>
+        <a href="legal.html#confidentialite">Confidentialité</a>
+        <a href="mailto:hello@petready.fr">hello@petready.fr</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
